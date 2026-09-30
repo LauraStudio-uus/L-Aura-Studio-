@@ -5,8 +5,8 @@ window.LAURA_CONFIG = {
   // Để trống => website chạy Local Demo bằng localStorage.
   // Điền Supabase Project URL + Publishable/Anon Key => dữ liệu dùng chung toàn website.
   supabase: {
-    url: "https://supabase.com/dashboard/project/pfcqffkizjiehxkyxjvp/sql/8b3399d9-6c12-4965-9ee3-88f438006192",
-    publishableKey: "Lethanhdat123",
+    url: "https://kwcldccuruilowmkepcg.supabase.co",
+    publishableKey: "sb_publishable_UHtCUrt9-nHmWVvBHcGqSQ_BpyYUszq",
     mediaBucket: "laura-media"
   },
 
