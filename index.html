@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="L'Aura Studio — Creative photography studio chuyên portrait, fashion, beauty, wedding và brand campaign tại Việt Nam.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f6f2ea">
+  <meta property="og:title" content="L'Aura Studio — Photography & Creative Production">
+  <meta property="og:description" content="Portrait · Fashion · Beauty · Wedding · Brand Campaign · Film">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1600&q=85">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" id="canonicalLink" href="https://YOUR-DOMAIN.example/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <title>L'Aura Studio — Photography</title>
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem('lauraTheme');
+        const dark = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (_) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+  <script type="application/ld+json" id="studioSchema">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"L'Aura Studio",
+    "url":"https://YOUR-DOMAIN.example/",
+    "image":"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1600&q=85",
+    "description":"Creative photography studio chuyên portrait, fashion, beauty, wedding và brand campaign.",
+    "areaServed":"Vietnam",
+    "sameAs":[]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header class="header" id="header">
+    <a class="logo" href="#home" aria-label="L'Aura Studio trang chủ">L'<span>Aura</span> Studio</a>
+    <nav class="nav" id="nav" aria-label="Điều hướng chính">
+      <a href="#about">Studio</a>
+      <a href="#services">Dịch vụ</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#video">Film</a>
+      <a href="#blog">Journal</a>
+      <a href="#pricing">Bảng giá</a>
+      <a href="#contact">Liên hệ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="header-book" href="#booking">Đặt lịch ↗</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Chuyển giao diện sáng/tối"><span id="themeIcon">☾</span></button>
+      <button class="header-plain" id="accountOpen" type="button">Tài khoản</button>
+      <button class="header-plain" id="adminOpen" type="button">Admin</button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu">☰</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=2200&q=88" alt="Editorial portrait của L'Aura Studio" fetchpriority="high" decoding="async">
+      <div class="hero-overlay"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">PHOTOGRAPHY · CREATIVE PRODUCTION</p>
+        <h1>Unveil your<br><em>inner aura.</em></h1>
+        <p class="hero-copy">Chúng tôi xây dựng hình ảnh có cá tính bằng ánh sáng, styling, direction và cảm xúc.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="#portfolio">Xem portfolio ↗</a>
+          <a class="text-link" href="#booking">Bắt đầu một dự án</a>
+        </div>
+      </div>
+      <div class="hero-meta"><span>HO CHI MINH CITY · VIETNAM</span><span>EST. 2026</span></div>
+    </section>
+
+    <section class="section intro" id="about">
+      <div class="section-label">01 / STUDIO</div>
+      <div class="intro-grid reveal">
+        <div><p class="eyebrow">L'AURA STUDIO</p><h2>Hình ảnh có<br><em>cảm xúc.</em></h2></div>
+        <div class="intro-copy">
+          <p class="lead">L’Aura là creative photography studio tập trung vào chân dung, thời trang, beauty, wedding và hình ảnh thương hiệu.</p>
+          <p>Chúng tôi kết hợp concept, lighting, styling, posing direction và hậu kỳ thành một visual system nhất quán — không chỉ tạo ra một bức ảnh đẹp mà tạo ra hình ảnh có nhận diện.</p>
+          <div class="mini-stats"><div><b>06</b><span>Nhóm dịch vụ</span></div><div><b>4-step</b><span>Workflow</span></div><div><b>1:1</b><span>Creative direction</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services" id="services">
+      <div class="section-label">02 / SERVICES</div>
+      <div class="section-heading reveal"><p class="eyebrow">WHAT WE DO</p><h2>Dịch vụ.</h2></div>
+      <div class="service-list">
+        <a class="service-item reveal" href="service-portrait.html"><span>01</span><div><h3>Portrait</h3><p>Chân dung cá nhân, profile, nghệ sĩ và creator.</p></div><b>↗</b></a>
+        <a class="service-item reveal" href="service-fashion.html"><span>02</span><div><h3>Fashion & Beauty</h3><p>Editorial, lookbook, campaign và beauty concept.</p></div><b>↗</b></a>
+        <a class="service-item reveal" href="service-wedding.html"><span>03</span><div><h3>Wedding</h3><p>Pre-wedding, couple portrait và ngày cưới.</p></div><b>↗</b></a>
+        <a class="service-item reveal" href="service-brand.html"><span>04</span><div><h3>Brand Campaign</h3><p>Creative production cho thương hiệu và sản phẩm.</p></div><b>↗</b></a>
+        <a class="service-item reveal" href="service-concept.html"><span>05</span><div><h3>Concept cá nhân</h3><p>Mood, styling, lighting và visual direction riêng.</p></div><b>↗</b></a>
+        <a class="service-item reveal" href="service-costume.html"><span>06</span><div><h3>Cổ Trang</h3><p>Cinematic portrait, nhân vật và concept cổ trang.</p></div><b>↗</b></a>
+      </div>
+    </section>
+
+    <section class="section portfolio" id="portfolio">
+      <div class="section-label">03 / SELECTED WORK</div>
+      <div class="portfolio-head reveal">
+        <div><p class="eyebrow">OUR VISUAL LANGUAGE</p><h2>Selected<br><em>works.</em></h2></div>
+        <p>Portfolio được quản lý từ CMS. Ở chế độ Supabase, thay đổi của Admin xuất hiện cho mọi khách truy cập trên mọi thiết bị.</p>
+      </div>
+      <div class="gallery" id="portfolioGrid" aria-live="polite"></div>
+      <p class="empty-state" id="portfolioEmpty" hidden>Chưa có portfolio được xuất bản.</p>
+    </section>
+
+    <section class="section film" id="video">
+      <div class="section-label">04 / FILM & REELS</div>
+      <div class="film-head reveal">
+        <div><p class="eyebrow">MOTION</p><h2>Film,<br><em>in motion.</em></h2></div>
+        <p>Fashion film, behind the scenes và reels — hỗ trợ YouTube, Vimeo hoặc MP4/WebM.</p>
+      </div>
+      <div class="video-grid" id="videoGrid"></div>
+      <p class="empty-state" id="videoEmpty" hidden>Chưa có video được xuất bản.</p>
+    </section>
+
+    <section class="section journal" id="blog">
+      <div class="section-label">05 / JOURNAL</div>
+      <div class="section-heading reveal"><p class="eyebrow">L'AURA JOURNAL</p><h2>Stories &<br><em>knowledge.</em></h2></div>
+      <div class="blog-toolbar">
+        <p>Hậu trường, lighting, creative direction và góc nhìn từ studio.</p>
+        <div class="blog-filters" id="blogFilters">
+          <button class="filter-btn active" data-category="all">Tất cả</button>
+          <button class="filter-btn" data-category="Photography">Photography</button>
+          <button class="filter-btn" data-category="Behind the scenes">Behind the scenes</button>
+          <button class="filter-btn" data-category="Studio">Studio</button>
+        </div>
+      </div>
+      <div class="blog-grid" id="blogGrid"></div>
+      <p class="empty-state" id="blogEmpty" hidden>Chưa có bài viết trong danh mục này.</p>
+    </section>
+
+    <section class="quote-section"><div class="quote-mark">“</div><blockquote>We don't photograph people.<br><em>We photograph how they feel.</em></blockquote></section>
+
+    <section class="section pricing" id="pricing">
+      <div class="section-label">06 / INVESTMENT</div>
+      <div class="section-heading reveal"><p class="eyebrow">PACKAGES</p><h2>Đầu tư cho<br><em>hình ảnh.</em></h2></div>
+      <div class="price-grid">
+        <article class="price-card"><p>PORTRAIT</p><h3>1.500.000<small>đ</small></h3><ul><li>01 concept</li><li>01 giờ chụp</li><li>01 outfit</li><li>10 ảnh retouch</li></ul><a href="#booking">Chọn gói ↗</a></article>
+        <article class="price-card featured"><div class="popular">MOST CHOSEN</div><p>EDITORIAL</p><h3>3.500.000<small>đ</small></h3><ul><li>02 concept</li><li>02–03 giờ chụp</li><li>2–3 outfit</li><li>20 ảnh retouch</li></ul><a href="#booking">Chọn gói ↗</a></article>
+        <article class="price-card"><p>CAMPAIGN</p><h3>Liên hệ</h3><ul><li>Creative direction</li><li>Studio & lighting</li><li>Production team</li><li>Retouch chuyên nghiệp</li></ul><a href="#booking">Trao đổi dự án ↗</a></article>
+      </div>
+    </section>
+
+    <section class="section process">
+      <div class="section-label">07 / PROCESS</div>
+      <div class="process-grid reveal">
+        <div><p class="eyebrow">FROM IDEA TO IMAGE</p><h2>Quy trình<br><em>làm việc.</em></h2></div>
+        <div class="steps">
+          <div><span>01</span><div><h3>Brief</h3><p>Mục tiêu, đối tượng, moodboard, ngân sách.</p></div></div>
+          <div><span>02</span><div><h3>Creative Direction</h3><p>Concept, lighting, styling, set và shot list.</p></div></div>
+          <div><span>03</span><div><h3>Production</h3><p>Shooting, tethering, direction và kiểm soát chất lượng.</p></div></div>
+          <div><span>04</span><div><h3>Post-production</h3><p>Select, color, retouch, export và bàn giao.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section booking" id="booking">
+      <div class="booking-box reveal">
+        <div class="booking-copy-block"><p class="eyebrow">LET'S CREATE</p><h2>Bạn có một<br><em>ý tưởng?</em></h2><p>Gửi brief. Yêu cầu sẽ vào pipeline CRM của Studio và có thể được theo dõi từ Admin Dashboard.</p></div>
+        <form class="booking-form" id="bookingForm">
+          <label>Họ và tên<input name="name" required maxlength="80" autocomplete="name" placeholder="Nguyễn Văn A"></label>
+          <label>Số điện thoại<input name="phone" required maxlength="30" autocomplete="tel" placeholder="09xx xxx xxx"></label>
+          <label>Email<input name="email" type="email" maxlength="160" autocomplete="email" placeholder="email@example.com"></label>
+          <label>Dịch vụ<select name="service"><option>Portrait</option><option>Fashion & Beauty</option><option>Wedding</option><option>Brand Campaign</option><option>Concept cá nhân</option><option>Cổ Trang</option></select></label>
+          <label>Ngày dự kiến<input name="requested_date" type="date"></label>
+          <label>Ngân sách dự kiến<select name="budget"><option value="">Chưa xác định</option><option>Dưới 2 triệu</option><option>2–5 triệu</option><option>5–15 triệu</option><option>Trên 15 triệu</option></select></label>
+          <label class="full">Brief / ý tưởng<textarea name="message" rows="5" maxlength="1500" placeholder="Mood, mục đích sử dụng, số người, địa điểm..."></textarea></label>
+          <label class="consent full"><input name="consent" type="checkbox" required> Tôi đồng ý để L’Aura liên hệ về yêu cầu này.</label>
+          <button class="btn btn-dark full" type="submit">Gửi yêu cầu ↗</button>
+          <p class="form-note full" id="bookingNote" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="section-label">08 / CONTACT</div>
+      <div class="contact-grid reveal">
+        <div><p class="eyebrow">COME SAY HELLO</p><h2>Let's make<br><em>something.</em></h2></div>
+        <div class="contact-info"><div><span>STUDIO</span><p id="contactLocation">Ho Chi Minh City, Vietnam</p></div><div><span>PHONE</span><p id="contactPhone">09xx xxx xxx</p></div><div><span>EMAIL</span><p id="contactEmail">LauraStudio@gmail.com</p></div><div><span>SOCIAL</span><p><a id="instagramLink" href="#">Instagram</a> · <a id="facebookLink" href="#">Facebook</a></p></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="logo">L'<span>Aura</span> Studio</div><p>© <span id="year"></span> L'Aura Studio.</p><a href="#home">Back to top ↑</a></footer>
+
+  <!-- IMAGE MODAL -->
+  <div class="modal media-modal" id="imageModal" aria-hidden="true"><button class="modal-close" data-close="imageModal" aria-label="Đóng">×</button><img id="modalImage" alt=""></div>
+
+  <!-- VIDEO MODAL -->
+  <div class="modal video-modal" id="videoModal" aria-hidden="true"><button class="modal-close" data-close="videoModal" aria-label="Đóng">×</button><div class="video-modal-shell"><div id="videoPlayer" class="video-player"></div><div class="video-modal-copy"><p class="eyebrow" id="videoModalCategory"></p><h2 id="videoModalTitle"></h2><p id="videoModalDescription"></p></div></div></div>
+
+  <!-- ARTICLE MODAL -->
+  <div class="modal article-modal" id="articleModal" aria-hidden="true">
+    <button class="modal-close" data-close="articleModal" aria-label="Đóng">×</button>
+    <article class="article-panel">
+      <img id="articleImage" alt="" loading="lazy">
+      <div class="article-inner"><p class="eyebrow" id="articleCategory"></p><h2 id="articleTitle"></h2><p class="article-date" id="articleDate"></p><div class="article-content" id="articleContent"></div>
+        <section class="comments-section"><div class="comments-heading"><p class="eyebrow">DISCUSSION</p><h3>Bình luận.</h3></div><p class="comment-login-message" id="commentLoginMessage">Đăng nhập để bình luận.</p><form id="commentForm" class="comment-form" hidden><textarea id="commentText" rows="4" maxlength="1000" placeholder="Viết bình luận..."></textarea><div><small id="commentUserName"></small><button class="btn btn-dark" type="submit">Đăng bình luận</button></div></form><div id="commentList" class="comment-list"></div></section>
+      </div>
+    </article>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="modal account-modal" id="accountModal" aria-hidden="true">
+    <div class="account-panel"><button class="panel-close" data-close="accountModal">×</button>
+      <div id="loginView"><p class="eyebrow">L'AURA ACCOUNT</p><h2>Welcome<br><em>back.</em></h2><form id="loginForm"><label>Email<input id="loginEmail" type="email" required autocomplete="email"></label><label>Mật khẩu<input id="loginPassword" type="password" required autocomplete="current-password"></label><button class="btn btn-dark" type="submit">Đăng nhập ↗</button><p class="form-error" id="loginError"></p></form><p class="switch-copy">Chưa có tài khoản? <button id="showRegister" type="button">Đăng ký</button></p></div>
+      <div id="registerView" hidden><p class="eyebrow">CREATE ACCOUNT</p><h2>Join<br><em>L'Aura.</em></h2><form id="registerForm"><label>Họ và tên<input id="registerName" required minlength="2" maxlength="80" autocomplete="name"></label><label>Email<input id="registerEmail" type="email" required autocomplete="email"></label><label>Mật khẩu<input id="registerPassword" type="password" required minlength="8" autocomplete="new-password"></label><button class="btn btn-dark" type="submit">Tạo tài khoản ↗</button><p class="form-error" id="registerError"></p></form><p class="switch-copy">Đã có tài khoản? <button id="showLogin" type="button">Đăng nhập</button></p></div>
+      <div id="profileView" hidden><p class="eyebrow">MY ACCOUNT</p><h2>Xin chào,<br><em id="profileName"></em></h2><div class="profile-card"><div><span>EMAIL</span><p id="profileEmail"></p></div><div><span>ROLE</span><p id="profileRole"></p></div></div><button class="btn btn-dark" id="logoutUser" type="button">Đăng xuất</button></div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="modal admin-modal" id="adminModal" aria-hidden="true">
+    <div class="admin-panel"><button class="panel-close" data-close="adminModal">×</button>
+      <div id="adminLoginView" class="admin-login-view"><p class="eyebrow">L'AURA STUDIO OS</p><h2>Admin<br><em>Dashboard.</em></h2><p class="admin-muted" id="adminModeText"></p><form id="adminLoginForm"><label>Email<input id="adminEmail" type="email" required autocomplete="email"></label><label>Mật khẩu<input id="adminPassword" type="password" required autocomplete="current-password"></label><button class="btn btn-dark" type="submit">Đăng nhập Admin ↗</button><p class="form-error" id="adminError"></p></form><button class="bootstrap-admin" id="bootstrapAdmin" type="button" hidden>Khởi tạo Admin demo từ email/mật khẩu trên</button></div>
+      <div id="adminDashboard" hidden>
+        <div class="admin-top"><div><p class="eyebrow">L'AURA STUDIO OS</p><h2>Control<br><em>center.</em></h2></div><div class="admin-top-actions"><span class="mode-badge" id="modeBadge"></span><button id="adminLogout" type="button">Đăng xuất</button></div></div>
+        <div class="admin-tabs" id="adminTabs">
+          <button class="admin-tab active" data-tab="overview">Overview</button><button class="admin-tab" data-tab="bookings">Bookings</button><button class="admin-tab" data-tab="portfolio">Portfolio</button><button class="admin-tab" data-tab="videos">Video</button><button class="admin-tab" data-tab="posts">Journal</button><button class="admin-tab" data-tab="comments">Comments</button><button class="admin-tab" data-tab="media">Media</button>
+        </div>
+
+        <section class="admin-view active" data-view="overview">
+          <div class="admin-stats" id="overviewStats"></div>
+          <div class="admin-callout"><h3>Production status</h3><p id="backendStatusText"></p><div class="admin-actions-row"><button class="btn btn-dark" type="button" data-go-tab="bookings">Xem bookings</button><button class="btn btn-outline" type="button" data-go-tab="media">Media library</button></div></div>
+        </section>
+
+        <section class="admin-view" data-view="bookings">
+          <div class="admin-section-head"><div><p class="eyebrow">CRM PIPELINE</p><h3>Bookings</h3></div><div class="admin-tools"><input id="bookingSearch" placeholder="Tìm tên / điện thoại / dịch vụ"><select id="bookingStatusFilter"><option value="all">Tất cả trạng thái</option><option value="new">Mới</option><option value="contacted">Đã liên hệ</option><option value="deposit">Đã cọc</option><option value="booked">Đã chốt lịch</option><option value="shooting">Đang sản xuất</option><option value="post">Hậu kỳ</option><option value="complete">Hoàn thành</option><option value="cancelled">Đã hủy</option></select></div></div>
+          <div id="adminBookingList" class="admin-list"></div>
+        </section>
+
+        <section class="admin-view" data-view="portfolio"><div class="admin-section-head"><div><p class="eyebrow">VISUAL CMS</p><h3>Portfolio</h3></div><button class="btn btn-dark" id="addPortfolio" type="button">+ Thêm ảnh</button></div><div id="portfolioAdminList" class="admin-list"></div><form id="portfolioForm" class="admin-form" hidden><input type="hidden" id="portfolioId"><div class="form-grid"><label>Tiêu đề<input id="portfolioTitle" required></label><label>Danh mục<input id="portfolioCategory" required placeholder="Portrait / Fashion"></label><label>Layout<select id="portfolioLayout"><option value="normal">Normal</option><option value="large">Large</option><option value="tall">Tall</option><option value="wide">Wide</option></select></label><label>Sort order<input id="portfolioSort" type="number" value="0"></label></div><label>Image URL<input id="portfolioUrl" type="url" placeholder="https://..."></label><label>Hoặc upload ảnh<input id="portfolioFile" type="file" accept="image/*"></label><label class="check-row"><input id="portfolioPublished" type="checkbox" checked> Xuất bản</label><div class="form-actions"><button class="btn btn-dark" type="submit">Lưu Portfolio</button><button class="btn btn-outline" id="cancelPortfolio" type="button">Hủy</button></div></form></section>
+
+        <section class="admin-view" data-view="videos"><div class="admin-section-head"><div><p class="eyebrow">MOTION CMS</p><h3>Film & Reels</h3></div><button class="btn btn-dark" id="addVideo" type="button">+ Thêm video</button></div><div id="videoAdminList" class="admin-list"></div><form id="videoForm" class="admin-form" hidden><input type="hidden" id="videoId"><div class="form-grid"><label>Tiêu đề<input id="videoTitle" required></label><label>Danh mục<input id="videoCategory" placeholder="Fashion Film / BTS"></label></div><label>URL YouTube / Vimeo / MP4<input id="videoUrl" type="url" required></label><label>Thumbnail URL<input id="videoThumb" type="url" placeholder="Có thể bỏ trống với YouTube"></label><label>Hoặc upload thumbnail<input id="videoThumbFile" type="file" accept="image/*"></label><label>Mô tả<textarea id="videoDescription" rows="3"></textarea></label><label class="check-row"><input id="videoPublished" type="checkbox" checked> Xuất bản</label><div class="form-actions"><button class="btn btn-dark" type="submit">Lưu Video</button><button class="btn btn-outline" id="cancelVideo" type="button">Hủy</button></div></form></section>
+
+        <section class="admin-view" data-view="posts"><div class="admin-section-head"><div><p class="eyebrow">EDITORIAL CMS</p><h3>Journal</h3></div><button class="btn btn-dark" id="addPost" type="button">+ Viết bài</button></div><div id="postAdminList" class="admin-list"></div><form id="postForm" class="admin-form" hidden><input type="hidden" id="postId"><div class="form-grid"><label>Tiêu đề<input id="postTitle" required></label><label>Danh mục<select id="postCategory"><option>Photography</option><option>Behind the scenes</option><option>Studio</option></select></label></div><label>Ảnh cover URL<input id="postImage" type="url"></label><label>Hoặc upload cover<input id="postImageFile" type="file" accept="image/*"></label><label>Mô tả ngắn<textarea id="postExcerpt" rows="2" required></textarea></label><label>Nội dung<textarea id="postContent" rows="12" required></textarea></label><label class="check-row"><input id="postPublished" type="checkbox" checked> Xuất bản</label><div class="form-actions"><button class="btn btn-dark" type="submit">Lưu bài viết</button><button class="btn btn-outline" id="cancelPost" type="button">Hủy</button></div></form></section>
+
+        <section class="admin-view" data-view="comments"><div class="admin-section-head"><div><p class="eyebrow">COMMUNITY</p><h3>Comments</h3></div></div><div id="adminCommentList" class="admin-list"></div></section>
+
+        <section class="admin-view" data-view="media"><div class="admin-section-head"><div><p class="eyebrow">STORAGE</p><h3>Media Library</h3></div></div><div class="admin-callout"><p>Supabase mode: file được upload vào Storage bucket và dùng chung toàn website. Local Demo: file ảnh nhỏ được lưu dạng Data URL; video file trực tiếp bị chặn để tránh vượt quota.</p><form id="mediaUploadForm" class="media-upload-form"><input id="mediaFile" type="file" accept="image/*,video/mp4,video/webm" required><button class="btn btn-dark" type="submit">Upload media</button></form><p class="form-note" id="mediaUploadNote"></p></div><div id="mediaGrid" class="media-library"></div></section>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+</body>
+</html>
