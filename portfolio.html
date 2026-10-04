@@ -14,13 +14,14 @@
   <link rel="apple-touch-icon" href="assets/laura-studio-mark.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <script>(()=>{try{const s=localStorage.getItem("lauraTheme");document.documentElement.dataset.theme=s==="dark"||(!s&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}catch(_){}})();</script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="design-system.css">
 </head>
 <body class="inner-page" >
   <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
-  <header class="header inner-header" id="header">
+  <header class="header inner-header liquid-glass" id="header">
     <a href="index.html" class="logo brand-logo" aria-label="L’AURA STUDIO — Trang chủ"><img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120"></a>
     <nav class="nav" id="nav" aria-label="Điều hướng chính">
       <a href="studio.html">Studio</a>
@@ -29,10 +30,12 @@
       <a href="portfolio.html" aria-current="page">Portfolio</a>
       <a href="pricing.html">Bảng giá</a>
       <a href="contact.html">Liên hệ</a>
+    
+      <a class="mobile-nav-link" href="booking.html">Đặt lịch ↗</a>
     </nav>
     <div class="header-actions">
       <a class="header-btn" href="booking.html">Đặt lịch <span>↗</span></a>
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện"><span id="themeIcon" aria-hidden="true">☾</span></button>
+      <button type="button" class="theme-toggle liquid-glass" id="themeToggle" aria-label="Chuyển giao diện"><span id="themeIcon" aria-hidden="true">☾</span></button>
     </div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu">☰</button>
   </header>
@@ -43,7 +46,7 @@
       <h1>Our visual<br><em>language.</em></h1>
       <p class="inner-hero-copy">Những hình ảnh đại diện cho cách L’AURA nhìn thế giới: thời trang, điện ảnh và giàu cảm xúc.</p>
     </section>
-    <section class="inner-section portfolio" id="portfolio"><div class="gallery"><button class="gallery-card large" data-image="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85" alt="Portrait"><span>Portrait / 01</span></button><button class="gallery-card" data-image="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85" alt="Fashion"><span>Fashion / 02</span></button><button class="gallery-card tall" data-image="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Editorial"><span>Editorial / 03</span></button><button class="gallery-card" data-image="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85" alt="Beauty"><span>Beauty / 04</span></button><button class="gallery-card wide" data-image="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1400&q=85"><img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1400&q=85" alt="Lifestyle"><span>Portrait / 05</span></button></div></section>
+    <section class="inner-section portfolio" id="portfolio"><div class="gallery"><button class="gallery-card large" data-image="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85" alt="Portrait" loading="lazy" decoding="async"><span>Portrait / 01</span></button><button class="gallery-card" data-image="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85" alt="Fashion" loading="lazy" decoding="async"><span>Fashion / 02</span></button><button class="gallery-card tall" data-image="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Editorial" loading="lazy" decoding="async"><span>Editorial / 03</span></button><button class="gallery-card" data-image="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85" alt="Beauty" loading="lazy" decoding="async"><span>Beauty / 04</span></button><button class="gallery-card wide" data-image="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1400&q=85"><img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1400&q=85" alt="Lifestyle" loading="lazy" decoding="async"><span>Portrait / 05</span></button></div></section>
   </main>
   <footer class="inner-footer"><div class="logo footer-brand"><img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120"></div><p>© <span id="year"></span> L’AURA STUDIO.</p><a href="index.html">Về trang chủ ↑</a></footer>
   <div class="modal" id="imageModal"><button class="modal-close" id="modalClose" type="button" aria-label="Đóng">×</button><img id="modalImage" src="" alt="Xem ảnh lớn"></div>

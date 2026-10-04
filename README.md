@@ -7,6 +7,8 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 - Supabase Storage lưu ảnh concept, Portfolio và bài viết.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
+- Nút ở đầu trang cho phép đổi giao diện sáng/tối; lựa chọn được ghi nhớ trên thiết bị.
+- `design-system.css` là lớp giao diện mới; cần tải lên cùng `style.css` để giữ đúng kiểu chữ, khoảng cách và thẻ nội dung.
 
 ## 1. Khởi tạo Supabase
 

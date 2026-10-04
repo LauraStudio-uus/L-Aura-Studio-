@@ -23,6 +23,10 @@
   const postCache = "ddStudioPosts";
   const portfolioCache = "lauraStudioPortfolio";
   const uuid = value => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "");
+  const needsConcepts = !!document.querySelector('[data-concept-id], #conceptDetailGallery, #conceptAdminList');
+  const needsPosts = !!document.querySelector('#blogGrid, #adminPostList');
+  const needsPortfolio = !!document.querySelector('#portfolio .gallery, #portfolioAdminList');
+  const hasAdminPanel = !!document.getElementById('adminLoginForm');
 
   async function uploadImage(file, folder) {
     if (!file) return "";
@@ -153,12 +157,16 @@
 
   async function bootstrap() {
     try {
-      const results = await Promise.allSettled([refreshConcepts(), refreshPosts(), refreshPortfolio()]);
+      const tasks = [];
+      if (needsConcepts) tasks.push(refreshConcepts());
+      if (needsPosts) tasks.push(refreshPosts());
+      if (needsPortfolio) tasks.push(refreshPortfolio());
+      const results = await Promise.allSettled(tasks);
       for (const result of results) if (result.status === 'rejected') console.error('Lỗi tải nội dung Supabase:', result.reason);
-      if (await requireAdmin()) {
+      if (hasAdminPanel && await requireAdmin()) {
         if (typeof setAdminAuthenticated === "function") setAdminAuthenticated();
         await refreshBookings();
-      } else if (typeof clearAdminAuthenticated === "function") {
+      } else if (hasAdminPanel && typeof clearAdminAuthenticated === "function") {
         clearAdminAuthenticated();
       }
     } catch (error) {
@@ -169,7 +177,11 @@
   // Cập nhật nội dung khi khách quay lại tab sau khi Admin đăng hoặc xóa.
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
-      Promise.allSettled([refreshPosts(), refreshPortfolio()]).then(results => {
+      const tasks = [];
+      if (needsPosts) tasks.push(refreshPosts());
+      if (needsPortfolio) tasks.push(refreshPortfolio());
+      if (!tasks.length) return;
+      Promise.allSettled(tasks).then(results => {
         for (const result of results) if (result.status === 'rejected') console.error('Lỗi cập nhật nội dung:', result.reason);
       });
     }

@@ -1,0 +1,285 @@
+/* L'AURA design layer: calm, platform-native typography and clear hierarchy. */
+:root{
+  --bg:#f7f5f1;
+  --surface:#fffdfa;
+  --surface-2:#f0ede7;
+  --text:#26221e;
+  --muted:#625d56;
+  --line:#ded8cf;
+  --accent:#9b7950;
+  --ds-nav:rgba(255,253,249,.88);
+  --ds-stroke:rgba(68,52,39,.17);
+  --ds-shadow:0 14px 40px rgba(45,34,23,.08);
+  --ds-radius:24px;
+}
+html[data-theme="dark"]{
+  --bg:#111315;
+  --surface:#1b1e20;
+  --surface-2:#24282b;
+  --text:#f6f3ed;
+  --muted:#c5bfb5;
+  --line:#3b3f42;
+  --accent:#ddc69d;
+  --ds-nav:rgba(25,28,30,.9);
+  --ds-stroke:rgba(239,232,220,.18);
+  --ds-shadow:0 16px 40px rgba(0,0,0,.22);
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.58;
+  letter-spacing:-.012em;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input,select,textarea{font:inherit}
+::selection{background:#c8aa79;color:#17140f}
+
+/* A floating control layer; the photography and content stay visually separate. */
+html .header.liquid-glass,
+html .inner-page .header.liquid-glass,
+html[data-theme="dark"] .header.liquid-glass,
+html[data-theme="dark"] body.inner-page .header.liquid-glass{
+  top:16px;
+  left:clamp(12px,3vw,48px);
+  right:clamp(12px,3vw,48px);
+  width:auto;
+  height:70px;
+  padding:0 20px;
+  border:1px solid var(--ds-stroke);
+  border-radius:22px;
+  background:var(--ds-nav);
+  box-shadow:var(--ds-shadow);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+}
+.header .brand-logo{width:150px;height:58px}
+.header .nav{gap:3px;margin-right:14px}
+.header .nav a{
+  min-height:40px;
+  display:inline-flex;
+  align-items:center;
+  padding:7px 11px;
+  border:1px solid transparent;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  text-transform:none;
+  color:var(--text);
+  opacity:.88;
+}
+.header .nav a:hover,.header .nav a[aria-current="page"]{
+  background:var(--surface-2);
+  border-color:var(--ds-stroke);
+  opacity:1;
+}
+.inner-page .header .nav a[aria-current="page"]:after{display:none}
+.header-actions{gap:8px}
+.header-btn,.theme-toggle.liquid-glass,.menu-toggle{
+  min-height:42px;
+  border-radius:999px;
+  border:1px solid var(--ds-stroke);
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:none;
+}
+.header-btn{padding:0 16px;font-size:12px;font-weight:650;text-transform:none;letter-spacing:0}
+.theme-toggle.liquid-glass{height:42px;min-width:42px}
+html[data-theme="dark"] .header .theme-toggle.liquid-glass{background:var(--surface);color:var(--text);border-color:var(--ds-stroke)}
+.account-btn,.admin-link{border-radius:999px;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--text)}
+
+/* Large editorial type uses the studio's serif accent sparingly. */
+.hero{min-height:min(940px,100svh)}
+.hero-content{max-width:800px}
+.hero h1{font-size:clamp(58px,8.2vw,118px);font-weight:700;line-height:.94;letter-spacing:-.065em}
+.hero h1 em{font-weight:500}
+.hero-text{max-width:590px;line-height:1.7}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em}
+.section{padding:clamp(88px,8vw,132px) clamp(24px,6vw,96px)}
+.section> :not(.section-label),.inner-section>*{max-width:1400px;margin-left:auto;margin-right:auto}
+.inner-hero>*{width:100%;max-width:1400px}
+.section-label{left:clamp(24px,6vw,96px);top:34px}
+.section h2,.inner-section h2{font-size:clamp(44px,5.5vw,78px);font-weight:650;line-height:1.02;letter-spacing:-.055em}
+.inner-hero{min-height:64svh;padding:170px clamp(24px,6vw,96px) 94px}
+.inner-hero h1{font-size:clamp(56px,8vw,112px);font-weight:700;letter-spacing:-.065em;line-height:.96}
+.inner-hero-copy,.section-intro{max-width:680px;color:var(--muted);line-height:1.72}
+.inner-section{padding:clamp(84px,7vw,112px) clamp(24px,6vw,96px)}
+.lead{font-size:clamp(20px,2.1vw,26px);line-height:1.48}
+
+/* Controls have a clear shape and a quiet, immediate response. */
+.btn,.header-btn,.filter-btn,.admin-secondary,.admin-logout,.admin-row-actions button,.admin-contact-actions button{
+  border-radius:999px;
+  transition:background-color .22s ease,color .22s ease,border-color .22s ease,transform .22s ease;
+}
+.btn{min-height:50px;padding:13px 22px;font-size:13px;font-weight:650;letter-spacing:0;text-transform:none}
+.btn-dark{background:#302922;color:#fff;border-color:#302922}
+.btn-dark:hover{background:#574938;border-color:#574938;color:#fff;transform:translateY(-2px)}
+html[data-theme="dark"] .btn-dark{background:#e9d7b6;border-color:#e9d7b6;color:#221b14}
+html[data-theme="dark"] .btn-dark:hover{background:#f4e4c6;border-color:#f4e4c6;color:#221b14}
+.btn-light{background:#fffdfa;color:#25211b;border-color:rgba(255,255,255,.75)}
+.filter-btn{min-height:42px;padding:9px 16px;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none}
+.filter-btn.active,.filter-btn:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
+.text-link,.underline-link,.concept-detail-link{border-radius:999px;font-size:12px;font-weight:650;letter-spacing:0;text-transform:none}
+.menu-toggle{font-size:19px}
+
+/* Solid content surfaces keep photographs and text legible. */
+.services,.quote-section,.inner-soft{background:var(--surface-2);color:var(--text)}
+.intro,.portfolio,.pricing,.blog,.contact,.experience,.video-showcase{background:var(--bg);color:var(--text)}
+.service-list{display:grid;gap:12px;border-top:0}
+.service-item{
+  padding:23px 24px;
+  border:1px solid var(--ds-stroke);
+  border-radius:20px;
+  background:var(--surface);
+  box-shadow:0 5px 20px rgba(45,34,23,.035);
+  transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease;
+}
+.service-item:hover{padding-left:24px;transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--ds-shadow)}
+.service-item h3{font-size:clamp(20px,2vw,28px);font-weight:650}
+.service-item p{font-size:14px;color:var(--muted)}
+.concept-grid,.care-grid,.inner-card-grid,.inner-stat-grid,.price-grid{
+  gap:16px;
+  border:0;
+  background:transparent;
+}
+.concept-grid article,.care-grid article,.inner-card,.inner-stat-grid>div,.price-card,
+.policy-grid article,.package-detail,.blog-card,.booking-box,.inner-cta{
+  border:1px solid var(--ds-stroke);
+  border-radius:var(--ds-radius);
+  background:var(--surface);
+  box-shadow:0 6px 24px rgba(45,34,23,.045);
+}
+.concept-grid article{overflow:hidden}
+.concept-grid h4,.inner-card h3,.care-grid h3,.policy-grid h3,.price-card h3{font-weight:650;letter-spacing:-.035em}
+.concept-grid p,.inner-card p,.care-grid p,.policy-grid p:not(.eyebrow),.policy-grid li,.blog-card p{color:var(--muted);font-size:14px;line-height:1.7}
+.concept-grid .concept-label{color:#785e40}
+.package-details{gap:22px}
+.package-detail{padding:clamp(28px,4vw,56px)}
+.package-detail h3{font-weight:700;letter-spacing:-.05em}
+.pricing .price-grid{gap:16px;background:transparent}
+.price-card{padding:36px 30px}
+.price-card.featured{background:var(--surface-2);box-shadow:0 10px 30px rgba(45,34,23,.09)}
+.popular{border-radius:999px;padding:8px 12px;font-size:10px;font-weight:700}
+.gallery{gap:16px}
+.gallery-card,.video-card-media{border-radius:20px;overflow:hidden}
+.gallery-card img{filter:none}
+.blog-card{overflow:hidden}
+.blog-card-body{padding:28px}
+.blog-card h3{font-weight:650;line-height:1.18;letter-spacing:-.035em}
+.booking-box{overflow:hidden}
+.booking-form{background:var(--surface-2)}
+.booking-form input,.booking-form select,.booking-form textarea,
+.account-view input,.admin-login input,.post-form input,.post-form select,.post-form textarea{
+  min-height:46px;
+  border:1px solid var(--ds-stroke);
+  border-radius:12px;
+  background:var(--surface);
+  padding:12px 14px;
+  color:var(--text);
+}
+html[data-theme="dark"] .booking-form input,
+html[data-theme="dark"] .booking-form select,
+html[data-theme="dark"] .booking-form textarea,
+html[data-theme="dark"] .account-view input,
+html[data-theme="dark"] .admin-login input,
+html[data-theme="dark"] .post-form input,
+html[data-theme="dark"] .post-form select,
+html[data-theme="dark"] .post-form textarea{background:var(--surface);color:var(--text);border-color:var(--ds-stroke)}
+.account-panel,.admin-panel,.article-reader{border-radius:28px;background:var(--surface);color:var(--text)}
+.admin-tab,.admin-secondary,.admin-row-actions button{border-radius:12px}
+
+html[data-theme="dark"] :is(.services,.quote-section,.inner-soft){background:var(--surface-2);color:var(--text)}
+html[data-theme="dark"] :is(.intro,.portfolio,.pricing,.blog,.contact,.experience,.video-showcase){background:var(--bg);color:var(--text)}
+html[data-theme="dark"] :is(.service-item,.concept-grid article,.care-grid article,.inner-card,.inner-stat-grid>div,.price-card,.policy-grid article,.package-detail,.blog-card,.booking-box,.inner-cta){background:var(--surface);color:var(--text);border-color:var(--ds-stroke);box-shadow:var(--ds-shadow)}
+html[data-theme="dark"] .price-card.featured{background:#2c2924}
+html[data-theme="dark"] .concept-grid .concept-label{color:#e1c99e}
+
+@media(max-width:1320px){
+  html .header.liquid-glass,html .inner-page .header.liquid-glass,
+  html[data-theme="dark"] .header.liquid-glass,html[data-theme="dark"] body.inner-page .header.liquid-glass{
+    top:10px;left:12px;right:12px;height:64px;padding:0 14px;border-radius:20px;
+  }
+  .header .brand-logo{width:132px;height:52px}
+  .header .nav{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;gap:0;margin:0;padding:12px;border:1px solid var(--ds-stroke);border-radius:20px;background:var(--surface);box-shadow:var(--ds-shadow)}
+  .header .nav.open{display:flex}
+  .header .nav a,.header .nav .mobile-nav-link{min-height:46px;padding:10px 14px;border-radius:10px;border:0;font-size:14px}
+  .header .nav a:hover,.header .nav a[aria-current="page"]{background:var(--surface-2)}
+  .header .nav .mobile-nav-link{display:flex;border:0}
+  .header-actions{display:flex;gap:8px;margin-left:auto;margin-right:10px}
+  .header-actions .header-btn,.header-actions .account-btn,.header-actions .admin-link{display:none}
+  .theme-toggle-label{display:none}
+  .theme-toggle.liquid-glass,.menu-toggle{width:42px;min-width:42px;height:42px}
+  .menu-toggle{display:grid;color:var(--text)}
+  .pricing .price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .care-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  html .header.liquid-glass,html .inner-page .header.liquid-glass,
+  html[data-theme="dark"] .header.liquid-glass,html[data-theme="dark"] body.inner-page .header.liquid-glass{left:10px;right:10px;padding:0 12px}
+  .header .brand-logo{width:112px}
+  .header-actions{gap:5px;margin-right:7px}
+  .hero{min-height:88svh;padding:110px 24px 90px}
+  .hero h1{font-size:clamp(50px,12.5vw,70px);letter-spacing:-.055em}
+  .hero-text{font-size:15px;line-height:1.65}
+  .section{padding:84px 24px}
+  .section-label{left:24px;top:30px}
+  .section h2,.inner-section h2{font-size:clamp(42px,10.5vw,60px)}
+  .inner-hero{padding:140px 24px 70px}
+  .inner-hero h1{font-size:clamp(52px,12vw,78px)}
+  .inner-section{padding:80px 24px}
+  .concept-grid,.care-grid,.inner-card-grid,.pricing .price-grid,.policy-grid{grid-template-columns:1fr}
+  .service-item{grid-template-columns:34px 1fr 20px;gap:12px;padding:20px}
+  .service-item:hover{padding-left:20px}
+  .booking-box>div:first-child,.booking-form{padding:34px 24px}
+  .admin-panel,.article-reader{border-radius:0}
+}
+@media(max-width:390px){.header .brand-logo{width:104px}.theme-toggle.liquid-glass,.menu-toggle{width:40px;min-width:40px;height:40px}}
+@media(prefers-reduced-motion:reduce){.service-item,.btn{transition:none}}
+
+/* Six service steps share the same rounded card language as the rest of L'AURA. */
+.steps{display:grid;gap:14px;border:0;background:transparent}
+.steps>div,
+html[data-theme="dark"] .steps>div{
+  display:grid;
+  grid-template-columns:44px minmax(0,1fr);
+  align-items:start;
+  gap:16px;
+  padding:22px 24px;
+  border:1px solid var(--ds-stroke);
+  border-radius:22px;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:0 6px 20px rgba(45,34,23,.045);
+}
+.steps>div>span{
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border:1px solid var(--ds-stroke);
+  border-radius:14px;
+  background:var(--surface-2);
+  color:var(--accent);
+  font-size:12px;
+  font-weight:700;
+}
+.steps h3{font-size:18px;font-weight:650;line-height:1.3;letter-spacing:-.025em;color:var(--text)}
+.steps p{margin-top:7px;font-size:14px;line-height:1.65;color:var(--muted)}
+.process .steps>div{background:#252728;border-color:rgba(255,255,255,.16);color:#f7f3ec;box-shadow:none}
+.process .steps h3{color:#f7f3ec}
+.process .steps p{color:#c8c2b9}
+.process .steps>div>span{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.17);color:#ead1a2}
+.inner-section .inner-steps{max-width:1120px;grid-template-columns:repeat(2,minmax(0,1fr));margin-left:auto;margin-right:auto}
+html[data-theme="dark"] .inner-steps>div{background:var(--surface);border-color:var(--ds-stroke)}
+@media(max-width:850px){.inner-section .inner-steps{grid-template-columns:1fr}}
+@media(max-width:650px){.steps>div,html[data-theme="dark"] .steps>div{grid-template-columns:38px minmax(0,1fr);gap:12px;padding:18px;border-radius:19px}.steps>div>span{width:36px;height:36px;border-radius:12px}.steps h3{font-size:17px}}
+
+/* Animate the palette only while the visitor changes theme. */
+html.theme-switching :is(body,.header,.nav,.intro,.services,.portfolio,.pricing,.blog,.booking,.contact,.quote-section,.experience,.process,.inner-section,.inner-hero,.inner-cta,.inner-card,.service-item,.concept-grid article,.price-card,.package-detail,.blog-card,.booking-box,.booking-form,.steps>div,.account-panel,.admin-panel,.article-reader,footer,.header-btn,.theme-toggle,.menu-toggle,.btn,.nav a,.logo,.inner-card h3,.steps h3,.steps p){
+  transition-property:background-color,color,border-color;
+  transition-duration:260ms;
+  transition-timing-function:cubic-bezier(.2,.7,.2,1);
+}
+@media(prefers-reduced-motion:reduce){html.theme-switching :is(body,.header,.nav,.intro,.services,.portfolio,.pricing,.blog,.booking,.contact,.quote-section,.experience,.process,.inner-section,.inner-hero,.inner-cta,.inner-card,.service-item,.concept-grid article,.price-card,.package-detail,.blog-card,.booking-box,.booking-form,.steps>div,.account-panel,.admin-panel,.article-reader,footer,.header-btn,.theme-toggle,.menu-toggle,.btn,.nav a,.logo,.inner-card h3,.steps h3,.steps p){transition-duration:0ms}}

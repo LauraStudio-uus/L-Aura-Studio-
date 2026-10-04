@@ -20,8 +20,12 @@ if (year) {
 }
 
 if (menuToggle && nav) {
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-controls', 'nav');
   menuToggle.addEventListener("click", () => {
     nav.classList.toggle("open");
+    menuToggle.setAttribute('aria-expanded', String(nav.classList.contains('open')));
+    menuToggle.setAttribute('aria-label', nav.classList.contains('open') ? 'Đóng menu' : 'Mở menu');
 
     menuToggle.textContent =
       nav.classList.contains("open")
@@ -33,26 +37,46 @@ if (menuToggle && nav) {
 document.querySelectorAll(".nav a").forEach(link => {
   link.addEventListener("click", () => {
     if (nav) nav.classList.remove("open");
-    if (menuToggle) menuToggle.textContent = "☰";
+    if (menuToggle) { menuToggle.textContent = "☰"; menuToggle.setAttribute('aria-expanded', 'false'); }
   });
 });
 
-window.addEventListener("scroll", () => {
-  if (header) {
-    header.classList.toggle(
-      "scrolled",
-      window.scrollY > 30
-    );
-  }
+document.querySelectorAll('[data-mobile-open]').forEach(button => {
+  button.addEventListener('click', () => {
+    nav?.classList.remove('open');
+    if (menuToggle) { menuToggle.textContent = '☰'; menuToggle.setAttribute('aria-expanded', 'false'); }
+    document.getElementById(button.dataset.mobileOpen)?.click();
+  });
 });
+
+if (header) {
+  let headerScrollFrame = 0;
+  let headerWasScrolled = window.scrollY > 30;
+  header.classList.toggle("scrolled", headerWasScrolled);
+  window.addEventListener("scroll", () => {
+    if (headerScrollFrame) return;
+    headerScrollFrame = requestAnimationFrame(() => {
+      headerScrollFrame = 0;
+      const isScrolled = window.scrollY > 30;
+      if (isScrolled !== headerWasScrolled) {
+        header.classList.toggle("scrolled", isScrolled);
+        headerWasScrolled = isScrolled;
+      }
+    });
+  }, { passive: true });
+}
 
 
 /* =========================================================
    02. REVEAL ANIMATION
 ========================================================= */
 
-const revealItems =
-  document.querySelectorAll(".reveal");
+document.querySelectorAll('.intro-grid, .section-heading, .concept-heading, .concept-grid article, .package-detail, .portfolio-head, .gallery-card, .inner-card, .inner-section-head').forEach((item,index) => {
+  item.classList.add('reveal');
+  item.style.setProperty('--reveal-delay', `${(index % 3) * 70}ms`);
+});
+
+const revealItems = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
 
@@ -2129,10 +2153,6 @@ function deleteComment(
     currentArticleId
   );
 
-  if (typeof renderAdminVideos === "function") {
-    renderAdminVideos();
-  }
-
   if (typeof renderAdminComments === "function") {
     renderAdminComments();
   }
@@ -2482,9 +2502,6 @@ document
             concepts:
               "adminConceptsTab",
 
-            videos:
-              "adminVideosTab",
-
             comments:
               "adminCommentsTab"
 
@@ -2515,13 +2532,6 @@ document
 
           renderAdminContacts();
 
-        }
-
-        if (
-          tab.dataset.adminTab ===
-          "videos"
-        ) {
-          renderAdminVideos();
         }
 
         if (
@@ -3936,338 +3946,57 @@ document.getElementById("portfolioAdminList")?.addEventListener("click",async e=
 document.querySelector("#portfolio .gallery")?.addEventListener("click",e=>{const card=e.target.closest(".gallery-card");if(card?.dataset.image)openImageModal(card.dataset.image)});
 
 /* =========================================================
-   L'AURA VIDEO / REELS CMS
-   Static-site friendly: stores metadata only, not video files.
-========================================================= */
-const VIDEO_KEY = "lauraStudioVideos";
-
-function getVideos() {
-  try {
-    const data = JSON.parse(localStorage.getItem(VIDEO_KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  } catch (_) {
-    return [];
-  }
-}
-
-function saveVideos(items) {
-  localStorage.setItem(VIDEO_KEY, JSON.stringify(items));
-}
-
-function normaliseVideoUrl(raw) {
-  const value = String(raw || "").trim();
-  if (!value) return null;
-  try {
-    const url = new URL(value, location.href);
-    if (!/^https?:$/.test(url.protocol)) return null;
-    const host = url.hostname.replace(/^www\./, "").toLowerCase();
-
-    if (host === "youtu.be") {
-      const id = url.pathname.split("/").filter(Boolean)[0];
-      return id ? { type: "youtube", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0` , id } : null;
-    }
-
-    if (host.endsWith("youtube.com")) {
-      let id = url.searchParams.get("v");
-      if (!id) {
-        const parts = url.pathname.split("/").filter(Boolean);
-        const markerIndex = parts.findIndex(part => ["shorts", "embed", "live"].includes(part));
-        if (markerIndex >= 0) id = parts[markerIndex + 1];
-      }
-      return id ? { type: "youtube", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0`, id } : null;
-    }
-
-    if (host === "vimeo.com" || host.endsWith(".vimeo.com")) {
-      const id = url.pathname.split("/").filter(Boolean).find(part => /^\d+$/.test(part));
-      return id ? { type: "vimeo", src: `https://player.vimeo.com/video/${encodeURIComponent(id)}`, id } : null;
-    }
-
-    if (/\.(mp4|webm|ogg)(?:$|\?)/i.test(url.href)) {
-      return { type: "file", src: url.href };
-    }
-
-    return { type: "file", src: url.href };
-  } catch (_) {
-    return null;
-  }
-}
-
-function videoThumbnail(item) {
-  if (item.thumbnail) return item.thumbnail;
-  const parsed = normaliseVideoUrl(item.url);
-  if (parsed?.type === "youtube" && parsed.id) {
-    return `https://img.youtube.com/vi/${encodeURIComponent(parsed.id)}/hqdefault.jpg`;
-  }
-  return "";
-}
-
-function renderVideos() {
-  const grid = document.getElementById("videoGrid");
-  const empty = document.getElementById("videoEmpty");
-  if (!grid) return;
-  const videos = getVideos();
-  grid.innerHTML = "";
-  if (empty) empty.hidden = videos.length > 0;
-
-  videos.forEach((item, index) => {
-    const thumb = videoThumbnail(item);
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "video-card reveal visible";
-    card.dataset.videoId = item.id;
-    card.setAttribute("aria-label", `Phát video ${item.title || "L'Aura"}`);
-
-    const media = document.createElement("span");
-    media.className = "video-card-media";
-    if (thumb) {
-      const img = document.createElement("img");
-      img.src = thumb;
-      img.alt = item.title || "L'Aura video";
-      img.loading = "lazy";
-      media.appendChild(img);
-    } else {
-      const fallback = document.createElement("span");
-      fallback.className = "video-card-fallback";
-      fallback.textContent = "L’AURA / MOTION";
-      media.appendChild(fallback);
-    }
-
-    const play = document.createElement("span");
-    play.className = "video-play";
-    play.setAttribute("aria-hidden", "true");
-    play.textContent = "▶";
-    media.appendChild(play);
-
-    const meta = document.createElement("span");
-    meta.className = "video-card-copy";
-    const category = document.createElement("small");
-    category.textContent = item.category || `FILM ${String(index + 1).padStart(2, "0")}`;
-    const title = document.createElement("strong");
-    title.textContent = item.title || "Untitled film";
-    meta.append(category, title);
-
-    card.append(media, meta);
-    card.addEventListener("click", () => openVideo(item));
-    grid.appendChild(card);
-  });
-}
-
-const videoModal = document.getElementById("videoModal");
-const videoPlayer = document.getElementById("videoPlayer");
-const videoModalClose = document.getElementById("videoModalClose");
-
-function openVideo(item) {
-  const parsed = normaliseVideoUrl(item?.url);
-  if (!parsed || !videoModal || !videoPlayer) {
-    alert("URL video không hợp lệ hoặc không thể phát.");
-    return;
-  }
-
-  videoPlayer.innerHTML = "";
-  if (parsed.type === "youtube" || parsed.type === "vimeo") {
-    const iframe = document.createElement("iframe");
-    iframe.src = `${parsed.src}${parsed.src.includes("?") ? "&" : "?"}autoplay=1`;
-    iframe.title = item.title || "L'Aura video";
-    iframe.allow = "autoplay; fullscreen; picture-in-picture";
-    iframe.allowFullscreen = true;
-    iframe.referrerPolicy = "strict-origin-when-cross-origin";
-    videoPlayer.appendChild(iframe);
-  } else {
-    const video = document.createElement("video");
-    video.src = parsed.src;
-    video.controls = true;
-    video.autoplay = true;
-    video.playsInline = true;
-    video.preload = "metadata";
-    videoPlayer.appendChild(video);
-  }
-
-  document.getElementById("videoModalCategory").textContent = item.category || "L'AURA MOTION";
-  document.getElementById("videoModalTitle").textContent = item.title || "Untitled film";
-  document.getElementById("videoModalDescription").textContent = item.description || "";
-  videoModal.classList.add("open");
-  videoModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("lightbox-open");
-}
-
-function closeVideo() {
-  if (!videoModal) return;
-  videoModal.classList.remove("open");
-  videoModal.setAttribute("aria-hidden", "true");
-  if (videoPlayer) videoPlayer.innerHTML = "";
-  document.body.classList.remove("lightbox-open");
-}
-
-videoModalClose?.addEventListener("click", closeVideo);
-videoModal?.addEventListener("click", event => {
-  if (event.target === videoModal) closeVideo();
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && videoModal?.classList.contains("open")) closeVideo();
-});
-
-function resetVideoForm() {
-  const form = document.getElementById("videoAdminForm");
-  if (!form) return;
-  form.reset();
-  document.getElementById("videoEditId").value = "";
-  const preview = document.getElementById("videoPreview");
-  if (preview) {
-    preview.hidden = true;
-    preview.innerHTML = "";
-  }
-}
-
-function updateVideoPreview() {
-  const preview = document.getElementById("videoPreview");
-  if (!preview) return;
-  const url = document.getElementById("videoUrl")?.value.trim();
-  const thumb = document.getElementById("videoThumbnail")?.value.trim();
-  const parsed = normaliseVideoUrl(url);
-  preview.innerHTML = "";
-  if (!url || !parsed) {
-    preview.hidden = true;
-    return;
-  }
-  preview.hidden = false;
-  const imageUrl = thumb || (parsed.type === "youtube" && parsed.id ? `https://img.youtube.com/vi/${encodeURIComponent(parsed.id)}/hqdefault.jpg` : "");
-  if (imageUrl) {
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "Video preview";
-    preview.appendChild(img);
-  }
-  const text = document.createElement("p");
-  text.textContent = parsed.type === "youtube" ? "YouTube" : parsed.type === "vimeo" ? "Vimeo" : "Video trực tiếp";
-  preview.appendChild(text);
-}
-
-function renderAdminVideos() {
-  const list = document.getElementById("videoAdminList");
-  const count = document.getElementById("videoCount");
-  if (!list) return;
-  const videos = getVideos();
-  if (count) count.textContent = videos.length;
-  if (!videos.length) {
-    list.innerHTML = '<div class="admin-empty-state">Chưa có video. Chọn “+ Thêm video” để đăng nội dung đầu tiên.</div>';
-    return;
-  }
-
-  list.innerHTML = videos.map(item => {
-    const thumb = videoThumbnail(item);
-    return `<article class="video-admin-row">
-      <div class="video-admin-thumb">${thumb ? `<img src="${escapeHTML(thumb)}" alt="">` : '<span>VIDEO</span>'}</div>
-      <div><h4>${escapeHTML(item.title || "Untitled film")}</h4><p>${escapeHTML(item.category || "Video")} · ${escapeHTML(item.url || "")}</p></div>
-      <div class="admin-row-actions"><button type="button" data-video-edit="${escapeHTML(item.id)}">Sửa</button><button type="button" data-video-delete="${escapeHTML(item.id)}">Xóa</button></div>
-    </article>`;
-  }).join("");
-}
-
-function editVideo(id) {
-  const item = getVideos().find(video => String(video.id) === String(id));
-  if (!item) return;
-  const form = document.getElementById("videoAdminForm");
-  if (!form) return;
-  document.getElementById("videoEditId").value = item.id;
-  document.getElementById("videoTitle").value = item.title || "";
-  document.getElementById("videoCategory").value = item.category || "";
-  document.getElementById("videoUrl").value = item.url || "";
-  document.getElementById("videoThumbnail").value = item.thumbnail || "";
-  document.getElementById("videoDescription").value = item.description || "";
-  form.hidden = false;
-  updateVideoPreview();
-  form.scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-document.getElementById("addVideoBtn")?.addEventListener("click", () => {
-  resetVideoForm();
-  const form = document.getElementById("videoAdminForm");
-  if (form) form.hidden = false;
-});
-
-document.getElementById("cancelVideoBtn")?.addEventListener("click", () => {
-  resetVideoForm();
-  const form = document.getElementById("videoAdminForm");
-  if (form) form.hidden = true;
-});
-
-document.getElementById("videoUrl")?.addEventListener("input", updateVideoPreview);
-document.getElementById("videoThumbnail")?.addEventListener("input", updateVideoPreview);
-
-document.getElementById("videoAdminForm")?.addEventListener("submit", event => {
-  event.preventDefault();
-  if (!isAdminAuthenticated()) {
-    alert("Phiên Admin không hợp lệ. Vui lòng đăng nhập lại.");
-    showAdminLogin();
-    return;
-  }
-
-  const url = document.getElementById("videoUrl").value.trim();
-  if (!normaliseVideoUrl(url)) {
-    alert("URL video không hợp lệ. Hãy dùng YouTube, Vimeo hoặc URL video trực tiếp.");
-    return;
-  }
-
-  const id = document.getElementById("videoEditId").value || `video-${Date.now()}`;
-  const item = {
-    id,
-    title: document.getElementById("videoTitle").value.trim(),
-    category: document.getElementById("videoCategory").value.trim(),
-    url,
-    thumbnail: document.getElementById("videoThumbnail").value.trim(),
-    description: document.getElementById("videoDescription").value.trim(),
-    updatedAt: new Date().toISOString()
-  };
-
-  const videos = getVideos();
-  const index = videos.findIndex(video => String(video.id) === String(id));
-  if (index >= 0) videos[index] = item;
-  else videos.unshift(item);
-  saveVideos(videos);
-  renderVideos();
-  renderAdminVideos();
-  resetVideoForm();
-  event.currentTarget.hidden = true;
-});
-
-document.getElementById("videoAdminList")?.addEventListener("click", event => {
-  const edit = event.target.closest("[data-video-edit]");
-  const del = event.target.closest("[data-video-delete]");
-  if (edit) editVideo(edit.dataset.videoEdit);
-  if (del) {
-    if (!isAdminAuthenticated()) {
-      alert("Phiên Admin không hợp lệ. Vui lòng đăng nhập lại.");
-      showAdminLogin();
-      return;
-    }
-    const item = getVideos().find(video => String(video.id) === String(del.dataset.videoDelete));
-    if (item && confirm(`Xóa video “${item.title || "Untitled"}”?`)) {
-      saveVideos(getVideos().filter(video => String(video.id) !== String(del.dataset.videoDelete)));
-      renderVideos();
-      renderAdminVideos();
-    }
-  }
-});
-
-renderVideos();
-
-/* =========================================================
    LIGHT / DARK THEME
    ========================================================= */
 const themeToggle=document.getElementById("themeToggle");
 const themeIcon=document.getElementById("themeIcon");
 const themeMeta=document.querySelector('meta[name="theme-color"]');
-function applyLauraTheme(theme,{persist=true}={}){
-  const next=theme==="dark"?"dark":"light";
+if(themeToggle && !themeToggle.querySelector('.theme-toggle-label')){
+  const label=document.createElement('span');
+  label.className='theme-toggle-label';
+  label.setAttribute('aria-hidden','true');
+  themeToggle.append(label);
+}
+let activeLauraTheme=document.documentElement.dataset.theme||"light";
+let themeFrame=0;
+let themeCleanup=0;
+function commitLauraTheme(next,persist){
   document.documentElement.dataset.theme=next;
   if(persist){try{localStorage.setItem("lauraTheme",next)}catch(_){}}
   if(themeIcon)themeIcon.textContent=next==="dark"?"☀":"☾";
   if(themeToggle){
     const label=next==="dark"?"Chuyển sang chế độ sáng":"Chuyển sang chế độ tối";
     themeToggle.setAttribute("aria-label",label);themeToggle.title=label;
+    themeToggle.setAttribute('aria-pressed',String(next==='dark'));
+    const visibleLabel=themeToggle.querySelector('.theme-toggle-label');
+    if(visibleLabel)visibleLabel.textContent=next==='dark'?'Sáng':'Tối';
   }
   if(themeMeta)themeMeta.setAttribute("content",next==="dark"?"#111315":"#f7f3eb");
+}
+function applyLauraTheme(theme,{persist=true,animate=false}={}){
+  const next=theme==="dark"?"dark":"light";
+  activeLauraTheme=next;
+  if(themeFrame)cancelAnimationFrame(themeFrame);
+  if(themeCleanup)clearTimeout(themeCleanup);
+  const shouldAnimate=animate
+    && next!==document.documentElement.dataset.theme
+    && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if(!shouldAnimate){
+    document.documentElement.classList.remove("theme-switching");
+    commitLauraTheme(next,persist);
+    return;
+  }
+  document.documentElement.classList.add("theme-switching");
+  // Apply the transition rule before changing the palette on the next frame.
+  void window.getComputedStyle(document.body).backgroundColor;
+  themeFrame=requestAnimationFrame(()=>{
+    themeFrame=0;
+    commitLauraTheme(next,persist);
+    themeCleanup=window.setTimeout(()=>{
+      document.documentElement.classList.remove("theme-switching");
+      themeCleanup=0;
+    },300);
+  });
 }
 function initialLauraTheme(){
   let saved=null;try{saved=localStorage.getItem("lauraTheme")}catch(_){}
@@ -4275,6 +4004,6 @@ function initialLauraTheme(){
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches?"dark":"light";
 }
 applyLauraTheme(document.documentElement.dataset.theme||initialLauraTheme(),{persist:false});
-themeToggle?.addEventListener("click",()=>applyLauraTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+themeToggle?.addEventListener("click",()=>applyLauraTheme(activeLauraTheme==="dark"?"light":"dark",{animate:true}));
 const systemTheme=window.matchMedia?.("(prefers-color-scheme: dark)");
-systemTheme?.addEventListener?.("change",event=>{let saved=null;try{saved=localStorage.getItem("lauraTheme")}catch(_){}if(!saved)applyLauraTheme(event.matches?"dark":"light",{persist:false})});
+systemTheme?.addEventListener?.("change",event=>{let saved=null;try{saved=localStorage.getItem("lauraTheme")}catch(_){}if(!saved)applyLauraTheme(event.matches?"dark":"light",{persist:false,animate:true})});

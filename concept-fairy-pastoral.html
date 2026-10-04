@@ -14,13 +14,14 @@
   <link rel="apple-touch-icon" href="assets/laura-studio-mark.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <script>(()=>{try{const s=localStorage.getItem("lauraTheme");document.documentElement.dataset.theme=s==="dark"||(!s&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}catch(_){}})();</script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="design-system.css">
 </head>
 <body class="inner-page" data-concept-page="fairy-pastoral">
   <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
-  <header class="header inner-header" id="header">
+  <header class="header inner-header liquid-glass" id="header">
     <a href="index.html" class="logo brand-logo" aria-label="L’AURA STUDIO — Trang chủ"><img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120"></a>
     <nav class="nav" id="nav" aria-label="Điều hướng chính">
       <a href="studio.html">Studio</a>
@@ -29,10 +30,12 @@
       <a href="portfolio.html">Portfolio</a>
       <a href="pricing.html">Bảng giá</a>
       <a href="contact.html">Liên hệ</a>
+    
+      <a class="mobile-nav-link" href="booking.html">Đặt lịch ↗</a>
     </nav>
     <div class="header-actions">
       <a class="header-btn" href="booking.html">Đặt lịch <span>↗</span></a>
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện"><span id="themeIcon" aria-hidden="true">☾</span></button>
+      <button type="button" class="theme-toggle liquid-glass" id="themeToggle" aria-label="Chuyển giao diện"><span id="themeIcon" aria-hidden="true">☾</span></button>
     </div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu">☰</button>
   </header>
