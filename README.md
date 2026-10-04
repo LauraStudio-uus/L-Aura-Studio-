@@ -1,101 +1,31 @@
-# L'Aura Studio V2 — Production-ready static frontend + Supabase backend
+# L’AURA STUDIO — bản triển khai đầy đủ
 
-Bản này thay kiến trúc localStorage-only bằng **backend adapter**:
+Gói này gồm giao diện trong `public/`, Node.js API trong `server.js`, PostgreSQL schema trong `database/schema.sql`, thư mục ảnh tải lên `uploads/` và file cấu hình mẫu `.env.example`.
 
-- Không cấu hình Supabase → **Local Demo** để mở và thử ngay.
-- Có Supabase URL + Publishable/Anon Key → Auth, database, comments, booking pipeline, CMS và Storage dùng chung trên mọi thiết bị.
-- Không còn hard-code email/mật khẩu Admin trong `app.js`.
-- Local Demo tạo Admin lần đầu bằng chính email/mật khẩu bạn nhập; mật khẩu local được hash SHA-256 + salt để tránh lưu plain text. Đây vẫn chỉ là demo phía client, không phải bảo mật production.
+## Chạy trên máy
 
-## 1) Chạy ngay ở Local Demo
+1. Cài Node.js 20+ và PostgreSQL 15+.
+2. Sao chép `.env.example` thành `.env`, thay toàn bộ mật khẩu và chuỗi bí mật.
+3. Chạy `npm install`.
+4. Chạy `npm run db:init` để tạo bảng và sáu concept.
+5. Chạy `npm start`, sau đó mở `http://localhost:3000`.
 
-Mở `index.html` bằng Live Server hoặc deploy lên GitHub Pages. Vào **Admin** → nhập email + mật khẩu >= 8 ký tự → bấm **Khởi tạo Admin demo** (chỉ xuất hiện khi chưa có Admin local).
+## Đưa lên Railway với database Supabase
 
-Dữ liệu local cũ từ các key `lauraStudioPortfolio`, `lauraStudioVideos`, `ddStudioPosts`, `ddStudioComments`, `ddStudioContacts` sẽ được migrate một lần sang V2 nếu có.
+1. Tạo Supabase project và chạy `database/schema.sql` trong SQL Editor.
+2. Tại nút Connect của Supabase, sao chép Session pooler URI cổng `5432`.
+3. Đưa toàn bộ nội dung thư mục này lên thư mục gốc của một GitHub repository.
+4. Trong Railway, chọn **New Project → Deploy from GitHub repo** và chọn repository vừa tạo.
+5. Thêm các biến `NODE_ENV`, `DATABASE_URL`, `DATABASE_SSL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` và `SESSION_SECRET` trong tab Variables.
+6. Gắn Railway Volume tại `/app/uploads` để giữ ảnh album qua các lần triển khai.
+7. Vào Settings → Networking → Generate Domain để lấy địa chỉ HTTPS công khai.
 
-## 2) Bật Supabase production
+Railway tự nhận `Dockerfile` và chạy `npm start`. Không cần tự đặt biến `PORT` vì Railway cung cấp biến này khi ứng dụng chạy. Bắt buộc đổi `ADMIN_EMAIL`, `ADMIN_PASSWORD` và `SESSION_SECRET` trước khi công khai website.
 
-1. Tạo Supabase project.
-2. Mở SQL Editor, chạy `supabase-schema.sql`.
-3. Nếu muốn dữ liệu mẫu, chạy `supabase-seed.sql`.
-4. Trong Authentication, tạo/đăng ký tài khoản Admin.
-5. Promote tài khoản đó bằng SQL:
+## Dữ liệu
 
-```sql
-update public.profiles
-set role = 'admin'
-where email = 'email-cua-ban@example.com';
-```
+- `concepts`, `concept_images`: album sáu concept, hiển thị trên trang chủ và trang concept.
+- `bookings`: yêu cầu đặt lịch và trạng thái xử lý.
+- `portfolio_items`, `posts`, `comments`: cấu trúc database sẵn cho các phần nội dung mở rộng.
 
-6. Mở `config.js` và điền:
-
-```js
-supabase: {
-  url: "https://YOUR_PROJECT.supabase.co",
-  publishableKey: "YOUR_PUBLISHABLE_OR_ANON_KEY",
-  mediaBucket: "laura-media"
-}
-```
-
-**Không bao giờ đưa `service_role` key vào frontend.** Chỉ dùng publishable/anon key; RLS trong SQL chịu trách nhiệm phân quyền.
-
-## 3) Những gì đã hoàn thiện
-
-### Auth & Security
-- Supabase Auth dùng email/password.
-- Admin xác định bằng `profiles.role = 'admin'`.
-- RLS cho từng bảng và từng thao tác.
-- Người dùng chỉ xóa comment của mình; Admin xóa mọi comment.
-- Booking public chỉ được INSERT với status `new`; chỉ Admin đọc/update/delete.
-- Portfolio / Video / Post: public chỉ đọc nội dung `published`; Admin CRUD.
-
-### Studio OS / Admin
-- Overview thống kê.
-- Booking CRM pipeline: Mới → Đã liên hệ → Đã cọc → Đã chốt lịch → Đang sản xuất → Hậu kỳ → Hoàn thành / Hủy.
-- Portfolio CMS: URL hoặc upload ảnh.
-- Video CMS: YouTube/Vimeo/MP4 + thumbnail URL/upload.
-- Journal CMS: cover URL/upload, draft/publish.
-- Comment moderation.
-- Media Library + copy URL.
-
-### Media
-- Supabase mode: upload file vào public bucket `laura-media` và metadata vào table `media`.
-- Local Demo: chỉ cho ảnh <4 MB dạng Data URL; không lưu video file trực tiếp.
-
-### SEO / Performance
-- Canonical, OG/Twitter meta, JSON-LD `ProfessionalService`.
-- `robots.txt`, `sitemap.xml`, 6 landing page dịch vụ riêng.
-- Lazy loading/async decode cho ảnh không critical.
-- Hero image `fetchpriority=high`.
-- `content-visibility:auto`, reduced motion, responsive mobile.
-
-## 4) Trước khi đưa domain thật lên Google
-
-Tìm và thay `https://YOUR-DOMAIN.example/` trong:
-- `config.js`
-- `index.html`
-- 6 file `service-*.html`
-- `robots.txt`
-- `sitemap.xml`
-
-Sau đó upload sitemap lên Google Search Console.
-
-## 5) Supabase Storage limits
-
-Bạn có thể đặt giới hạn MIME/file size trong Supabase Dashboard cho bucket `laura-media`. Với studio ảnh nên dùng WebP/AVIF/JPEG tối ưu thay vì upload RAW/TIFF trực tiếp. Video dài nên ưu tiên Vimeo/YouTube hoặc CDN video chuyên dụng thay vì serve file rất lớn từ frontend.
-
-## 6) Cấu trúc
-
-- `index.html` — website + modals + Studio OS.
-- `style.css` — giao diện sáng/tối, responsive, admin.
-- `config.js` — cấu hình site/Supabase/contact.
-- `app.js` — backend adapter + UI/CMS logic cho trang chính.
-- `site.js` — theme/nav nhẹ cho landing pages dịch vụ.
-- `supabase-schema.sql` — schema, RLS, Storage policies.
-- `supabase-seed.sql` — dữ liệu mẫu tùy chọn.
-- `robots.txt`, `sitemap.xml`, `404.html` — SEO/deploy.
-- `service-*.html` — landing pages dịch vụ.
-
-## Lưu ý production
-
-Frontend không thể tự tạo một backend bảo mật nếu chưa có Supabase project của bạn. Vì vậy package này đã hoàn thiện code + schema + policies, nhưng bạn vẫn phải tạo project và dán 2 giá trị public trong `config.js` để chuyển từ Local Demo sang Production Backend.
+Khi API hoạt động, album và booking được lưu trong PostgreSQL. Nếu chỉ mở thư mục `public/` như website tĩnh, giao diện vẫn chạy với localStorage để xem thử nhưng dữ liệu sẽ chỉ tồn tại trên trình duyệt đang dùng.

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thông tin liên hệ và mạng xã hội của L’AURA STUDIO.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f7f3eb">
+  <meta property="og:title" content="Liên hệ | L’AURA STUDIO">
+  <meta property="og:description" content="Thông tin liên hệ và mạng xã hội của L’AURA STUDIO.">
+  <meta property="og:type" content="website">
+  <title>Liên hệ | L’AURA STUDIO</title>
+  <link rel="icon" type="image/png" href="assets/laura-studio-mark.png">
+  <link rel="apple-touch-icon" href="assets/laura-studio-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <script>(()=>{try{const s=localStorage.getItem("lauraTheme");document.documentElement.dataset.theme=s==="dark"||(!s&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"}catch(_){}})();</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="inner-page" >
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+  <header class="header inner-header" id="header">
+    <a href="index.html" class="logo brand-logo" aria-label="L’AURA STUDIO — Trang chủ"><img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120"></a>
+    <nav class="nav" id="nav" aria-label="Điều hướng chính">
+      <a href="studio.html">Studio</a>
+      <a href="services.html">Dịch vụ</a>
+      <a href="experience.html">Trải nghiệm</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="pricing.html">Bảng giá</a>
+      <a href="contact.html" aria-current="page">Liên hệ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="header-btn" href="booking.html">Đặt lịch <span>↗</span></a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện"><span id="themeIcon" aria-hidden="true">☾</span></button>
+    </div>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu">☰</button>
+  </header>
+  <main id="main">
+    <section class="inner-hero">
+      <div class="inner-breadcrumb"><a href="index.html">Home</a><span>/</span><span>Liên hệ</span></div>
+      <p class="eyebrow">COME SAY HELLO</p>
+      <h1>Let’s make<br><em>something.</em></h1>
+      <p class="inner-hero-copy">Liên hệ để trao đổi về một buổi chụp cá nhân, portfolio hoặc chiến dịch thương hiệu.</p>
+    </section>
+    <section class="inner-section"><div class="contact-info inner-contact"><div><span>STUDIO</span><p>Ho Chi Minh City, Vietnam</p></div><div><span>PHONE</span><p>09xx xxx xxx</p></div><div><span>EMAIL</span><p>LauraStudio@gmail.com</p></div><div><span>SOCIAL</span><p><a href="https://www.instagram.com/_bachnien_/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61579669186355&locale=vi_VN" target="_blank" rel="noopener">Facebook</a></p></div></div><div class="inner-cta"><h2>Bạn đã có<br><em>một ý tưởng?</em></h2><a class="btn btn-dark" href="booking.html">Đặt lịch tư vấn ↗</a></div></section>
+  </main>
+  <footer class="inner-footer"><div class="logo footer-brand"><img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120"></div><p>© <span id="year"></span> L’AURA STUDIO.</p><a href="index.html">Về trang chủ ↑</a></footer>
+  <div class="modal" id="imageModal"><button class="modal-close" id="modalClose" type="button" aria-label="Đóng">×</button><img id="modalImage" src="" alt="Xem ảnh lớn"></div>
+  <div class="article-modal" id="articleModal"><button class="article-close" id="articleClose" type="button">×</button><article class="article-reader"><img id="articleImage" src="" alt=""><div class="article-reader-body"><p class="eyebrow" id="articleCategory"></p><h1 id="articleTitle"></h1><p class="article-date" id="articleDate"></p><div id="articleContent"></div><div id="commentLoginMessage" hidden></div><form id="commentForm" hidden><textarea id="commentText"></textarea><span id="commentUserName"></span></form><div id="commentList"></div></div></article></div>
+  <script src="script.js"></script>
+  <script src="backend-sync.js"></script>
+</body>
+</html>

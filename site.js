@@ -1,4 +1,0 @@
-"use strict";
-const $=s=>document.querySelector(s);
-function applyTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("lauraTheme",theme);const i=$("#themeIcon");if(i)i.textContent=theme==="dark"?"☀":"☾";const m=$("meta[name=\"theme-color\"]");if(m)m.content=theme==="dark"?"#111315":"#f6f2ea";}
-document.addEventListener("DOMContentLoaded",()=>{applyTheme(document.documentElement.dataset.theme||"light");$("#themeToggle")?.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));$("#menuToggle")?.addEventListener("click",()=>$("#nav")?.classList.toggle("open"));document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>$("#nav")?.classList.remove("open")));window.addEventListener("scroll",()=>$("#header")?.classList.toggle("scrolled",scrollY>25),{passive:true});const y=$("#year");if(y)y.textContent=new Date().getFullYear();});

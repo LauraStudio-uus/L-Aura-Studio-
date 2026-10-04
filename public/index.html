@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="L’AURA STUDIO — High-Fashion &amp; Alternative Concept Studio. Trải nghiệm chụp ảnh concept cá nhân hóa từ creative direction, trang phục, makeup, làm tóc đến chụp và hậu kỳ.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#f7f3eb">
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("lauraTheme");
+        const dark = saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.setAttribute("content", dark ? "#111315" : "#f7f3eb");
+      } catch (_) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+  <meta property="og:title" content="L’AURA STUDIO — Unveil Your Inner Aura">
+  <meta property="og:description" content="AURA PORTRAIT · SIGNATURE · COUTURE · BRAND — Trải nghiệm High-Fashion &amp; Alternative Concept trọn gói.">
+  <meta property="og:type" content="website">
+  <title>L’AURA STUDIO — High-Fashion &amp; Alternative Concept</title>
+  <link rel="icon" type="image/png" href="assets/laura-studio-mark.png">
+  <link rel="apple-touch-icon" href="assets/laura-studio-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+
+<body>
+  <a class="skip-link" href="#home">Bỏ qua đến nội dung chính</a>
+  
+  <div class="cursor"></div>
+
+  <header class="header" id="header">
+    <a href="#home" class="logo brand-logo" aria-label="L’AURA STUDIO — Trang chủ">
+      <img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120">
+    </a>
+    <nav class="nav" id="nav">
+      <a href="studio.html">Studio</a>
+      <a href="services.html">Dịch vụ</a>
+      <a href="experience.html">Trải nghiệm</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="pricing.html">Bảng giá</a>
+      <a href="contact.html">Liên hệ</a>
+    </nav>
+
+    <div class="header-actions">
+
+  <a class="header-btn" href="booking.html">
+    Đặt lịch <span>↗</span>
+  </a>
+
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Chuyển sang chế độ tối" title="Đổi giao diện sáng/tối">
+    <span class="theme-toggle-icon" id="themeIcon" aria-hidden="true">☾</span>
+  </button>
+
+  
+<div class="account-modal" id="accountModal">
+
+  <div class="account-panel">
+
+    <button class="account-close" id="accountClose">×</button>
+
+    <!-- LOGIN -->
+    <div id="loginView" class="account-view">
+
+      <p class="eyebrow">L'AURA ACCOUNT</p>
+
+      <h2>
+        Welcome<br>
+        <em>back.</em>
+      </h2>
+
+      <form id="loginForm">
+
+        <label>
+          Email
+          <input
+            type="email"
+            id="loginEmail"
+            required
+            placeholder="email@example.com"
+          >
+        </label>
+
+        <label>
+          Mật khẩu
+          <input
+            type="password"
+            id="loginPassword"
+            required
+            placeholder="••••••••"
+          >
+        </label>
+
+        <button class="btn btn-dark" type="submit">
+          Đăng nhập ↗
+        </button>
+
+        <p id="loginError" class="account-error"></p>
+
+      </form>
+
+      <p class="account-switch">
+        Chưa có tài khoản?
+        <button id="showRegister">Đăng ký</button>
+      </p>
+
+    </div>
+
+
+    <!-- REGISTER -->
+    <div id="registerView" class="account-view" hidden>
+
+      <p class="eyebrow">CREATE ACCOUNT</p>
+
+      <h2>
+        Join<br>
+        <em>L'Aura.</em>
+      </h2>
+
+      <form id="registerForm">
+
+        <label>
+          Họ và tên
+          <input
+            type="text"
+            id="registerName"
+            required
+            placeholder="Nguyễn Văn A"
+          >
+        </label>
+
+        <label>
+          Email
+          <input
+            type="email"
+            id="registerEmail"
+            required
+            placeholder="email@example.com"
+          >
+        </label>
+
+        <label>
+          Mật khẩu
+          <input
+            type="password"
+            id="registerPassword"
+            minlength="6"
+            required
+            placeholder="Tối thiểu 6 ký tự"
+          >
+        </label>
+
+        <button class="btn btn-dark" type="submit">
+          Tạo tài khoản ↗
+        </button>
+
+        <p id="registerError" class="account-error"></p>
+
+      </form>
+
+      <p class="account-switch">
+        Đã có tài khoản?
+        <button id="showLogin">Đăng nhập</button>
+      </p>
+
+    </div>
+
+
+    <!-- PROFILE -->
+    <div id="profileView" class="account-view" hidden>
+
+      <p class="eyebrow">MY ACCOUNT</p>
+
+      <h2>
+        Xin chào,<br>
+        <em id="profileName"></em>
+      </h2>
+
+      <div class="profile-card">
+
+        <div>
+          <span>EMAIL</span>
+          <p id="profileEmail"></p>
+        </div>
+
+        <div>
+          <span>MEMBER SINCE</span>
+          <p id="profileDate"></p>
+        </div>
+
+      </div>
+
+      <button
+        class="btn btn-dark"
+        id="logoutUser"
+      >
+        Đăng xuất
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <button type="button" class="account-btn" id="accountOpen" aria-label="Mở tài khoản">
+    Tài khoản
+  </button>
+
+  <button type="button" class="admin-link" id="adminOpen" aria-label="Mở trang quản trị">
+    Admin
+  </button>
+
+  
+
+</div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Mở menu">☰</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-overlay"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">HIGH-FASHION • ALTERNATIVE CONCEPT STUDIO</p>
+        <h1>Unveil Your<br><em>Inner Aura.</em></h1>
+        <p class="hero-text">Biến hóa hình ảnh, thể hiện cá tính riêng. L’AURA đồng hành từ concept, trang phục, makeup, làm tóc và phụ kiện đến tạo dáng, chụp ảnh và hậu kỳ.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="services.html">Khám phá dịch vụ <span>↗</span></a>
+          <a class="text-link" href="booking.html">Đặt lịch tư vấn ↓</a>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span>HỒ CHÍ MINH · VIETNAM</span>
+        <span>EST. 2026</span>
+      </div>
+      <div class="scroll-down">SCROLL <span>↓</span></div>
+    </section>
+ 
+    <section class="intro section" id="about">
+      <div class="section-label">01 / STUDIO</div>
+      <div class="intro-grid">
+        <div>
+          <p class="eyebrow">L'AURA STUDIO</p>
+          <h2>Một diện mạo<br><em>thuộc về bạn.</em></h2>
+        </div>
+        <div class="intro-copy">
+          <p class="lead">L’AURA STUDIO cung cấp dịch vụ chụp ảnh concept theo định hướng High-Fashion &amp; Alternative Concept, tập trung vào trải nghiệm biến hóa và dấu ấn riêng của mỗi khách hàng.</p>
+          <p>Từ lựa chọn concept, định hướng hình ảnh, trang phục, makeup, làm tóc và phụ kiện đến tạo dáng, chụp ảnh và hậu kỳ, ekip xây dựng một tổng thể hoàn chỉnh theo hình ảnh bạn mong muốn thể hiện.</p>
+          <a href="studio.html" class="underline-link">Câu chuyện L’AURA ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="services section" id="services">
+      <div class="section-label">02 / AURA SERVICES</div>
+      <div class="section-heading">
+        <p class="eyebrow">FOUR WAYS TO REVEAL YOUR AURA</p>
+        <h2>Chọn trải nghiệm<br><em>của bạn.</em></h2>
+        <p class="section-intro">Bốn nhóm dịch vụ được thiết kế theo mức độ tạo hình, cá nhân hóa và mục đích sử dụng hình ảnh.</p>
+      </div>
+
+      <div class="service-list service-packages">
+        <a class="service-item reveal" href="aura-portrait.html">
+          <span>01</span>
+          <div><h3>AURA PORTRAIT</h3><p>Concept cá nhân tập trung vào vẻ đẹp và thần thái riêng.</p></div>
+          <b>↗</b>
+        </a>
+        <a class="service-item reveal" href="aura-signature.html">
+          <span>02</span>
+          <div><h3>AURA SIGNATURE</h3><p>Concept nghệ thuật với mức độ tạo hình và cá nhân hóa cao.</p></div>
+          <b>↗</b>
+        </a>
+        <a class="service-item reveal" href="aura-couture.html">
+          <span>03</span>
+          <div><h3>AURA COUTURE</h3><p>High-Fashion &amp; Editorial với hai tạo hình giàu cá tính.</p></div>
+          <b>↗</b>
+        </a>
+        <a class="service-item reveal" href="aura-brand.html">
+          <span>04</span>
+          <div><h3>AURA BRAND</h3><p>Lookbook &amp; Campaign cho local brand và doanh nghiệp.</p></div>
+          <b>↗</b>
+        </a>
+      </div>
+
+      <div class="concept-showcase" id="concepts">
+        <div class="concept-heading">
+          <p class="eyebrow">SIGNATURE CONCEPTS</p>
+          <h3>6 concept được yêu thích</h3>
+          <p>Từ thanh thoát, mộng mơ đến sắc sảo và quyền lực — mỗi concept đều được điều chỉnh theo đường nét, cá tính và câu chuyện của bạn.</p>
+        </div>
+        <div class="concept-grid">
+          <article data-concept-id="angelic"><button class="concept-image-button" type="button" hidden aria-label="Xem ảnh concept Angelic / Ethereal"><img alt="Concept Angelic / Ethereal" loading="lazy"><i>Xem ảnh ↗</i></button><span>01</span><h4>Angelic / Ethereal</h4><p class="concept-label">Thiên thần / Thần thoại</p><p class="concept-desc">Ánh sáng mềm, chất liệu bay nhẹ và vẻ đẹp thanh thoát, trong trẻo.</p><a class="concept-detail-link" href="concept-angelic.html">Khám phá concept ↗</a></article>
+          <article data-concept-id="dark-gothic"><button class="concept-image-button" type="button" hidden aria-label="Xem ảnh concept Dark / Gothic"><img alt="Concept Dark / Gothic" loading="lazy"><i>Xem ảnh ↗</i></button><span>02</span><h4>Dark / Gothic</h4><p class="concept-label">Bóng tối / Huyền bí</p><p class="concept-desc">Tương phản sâu, màu trầm và biểu cảm sắc sảo, cá tính.</p><a class="concept-detail-link" href="concept-dark-gothic.html">Khám phá concept ↗</a></article>
+          <article data-concept-id="floral-muse"><button class="concept-image-button" type="button" hidden aria-label="Xem ảnh concept Floral / Muse"><img alt="Concept Floral / Muse" loading="lazy"><i>Xem ảnh ↗</i></button><span>03</span><h4>Floral / Muse</h4><p class="concept-label">Nàng thơ / Hoa cỏ</p><p class="concept-desc">Hoa, chất liệu mềm và bảng màu dịu tạo cảm giác lãng mạn, tự nhiên.</p><a class="concept-detail-link" href="concept-floral-muse.html">Khám phá concept ↗</a></article>
+          <article data-concept-id="fairy-pastoral"><button class="concept-image-button" type="button" hidden aria-label="Xem ảnh concept Fairy / Pastoral"><img alt="Concept Fairy / Pastoral" loading="lazy"><i>Xem ảnh ↗</i></button><span>04</span><h4>Fairy / Pastoral</h4><p class="concept-label">Cổ tích / Dã ngoại</p><p class="concept-desc">Không gian hoa cỏ, thiên nhiên và đạo cụ cổ tích trẻ trung, mộng mơ.</p><a class="concept-detail-link" href="concept-fairy-pastoral.html">Khám phá concept ↗</a></article>
+          <article data-concept-id="high-fashion"><button class="concept-image-button" type="button" hidden aria-label="Xem ảnh concept High Fashion / Glamour"><img alt="Concept High Fashion / Glamour" loading="lazy"><i>Xem ảnh ↗</i></button><span>05</span><h4>High Fashion / Glamour</h4><p class="concept-label">Thời trang cao cấp</p><p class="concept-desc">Thần thái, đường nét cơ thể và dáng pose thời trang sang trọng.</p><a class="concept-detail-link" href="concept-high-fashion.html">Khám phá concept ↗</a></article>
+          <article data-concept-id="oriental-period"><button class="concept-image-button" type="button" hidden aria-label="Xem ảnh concept Oriental / Period"><img alt="Concept Oriental / Period" loading="lazy"><i>Xem ảnh ↗</i></button><span>06</span><h4>Oriental / Period</h4><p class="concept-label">Cổ trang / Cổ phục</p><p class="concept-desc">Trang phục, makeup và phụ kiện phương Đông cổ điển, thanh lịch.</p><a class="concept-detail-link" href="concept-oriental-period.html">Khám phá concept ↗</a></article>
+        </div>
+      </div>
+
+      <div class="package-details">
+        <article class="package-detail" id="aura-portrait">
+          <header><div><p class="eyebrow">01 / PERSONAL CONCEPT</p><h3>AURA PORTRAIT</h3><blockquote>“Bắt đầu từ chính bạn, khám phá một phiên bản khác của mình.”</blockquote></div><div class="package-meta"><strong>1.890.000 VNĐ</strong><span>Khoảng 2 giờ · 01 concept</span></div></header>
+          <div class="package-columns"><div><h4>Trải nghiệm</h4><p>Gói chụp dành cho khách hàng muốn lưu giữ vẻ đẹp, thần thái và phong cách cá nhân trong một bộ ảnh chỉn chu. Bạn có thể chọn hình ảnh trong trẻo, nữ tính, quyến rũ, bí ẩn, cổ điển hoặc thời trang. Photographer hướng dẫn góc mặt, biểu cảm và tạo dáng xuyên suốt, kể cả khi bạn chưa từng đứng trước ống kính.</p><p class="package-value">Phù hợp để thử một concept mới, lưu giữ vẻ đẹp cá nhân hoặc làm mới hình ảnh mạng xã hội.</p></div><div><h4>Bạn sẽ nhận được</h4><ul><li>Tư vấn concept theo ngoại hình và phong cách</li><li>Trang phục, phụ kiện và đạo cụ cơ bản</li><li>01 layout makeup &amp; hair</li><li>Setup ánh sáng và hướng dẫn tạo dáng</li><li>10 ảnh xử lý màu và retouch hoàn thiện</li><li>Ảnh hậu trường cơ bản, bàn giao kỹ thuật số</li></ul></div></div>
+          <a class="btn btn-dark" href="#booking" data-booking-service="AURA PORTRAIT">Chọn AURA PORTRAIT ↗</a>
+        </article>
+
+        <article class="package-detail" id="aura-signature">
+          <header><div><p class="eyebrow">02 / ART CONCEPT</p><h3>AURA SIGNATURE</h3><blockquote>“Một concept riêng, một câu chuyện riêng, một phiên bản khác của bạn.”</blockquote></div><div class="package-meta"><strong>3.290.000 VNĐ</strong><span>Khoảng 3 giờ · 01 concept</span></div></header>
+          <div class="package-columns"><div><h4>Trải nghiệm</h4><p>Mood, màu sắc, trang phục, makeup, tóc, phụ kiện, ánh sáng, biểu cảm và tạo dáng được liên kết trong một concept rõ ràng. L’AURA chủ động chuẩn bị tổng thể để bạn không phải tự lo nên mặc gì, makeup thế nào hay tạo dáng ra sao.</p><p class="package-value">Dành cho khách hàng muốn nhìn thấy một phiên bản hoàn toàn khác của chính mình với dấu ấn cá nhân rõ nét.</p></div><div><h4>Bạn sẽ nhận được</h4><ul><li>Tư vấn cá nhân hóa và moodboard cơ bản</li><li>Trang phục, phụ kiện, đạo cụ được tuyển chọn</li><li>01 layout makeup &amp; hair chuyên nghiệp</li><li>Stylist hỗ trợ tổng thể tạo hình</li><li>15 ảnh xử lý màu, 08 ảnh retouch chuyên sâu</li><li>Ảnh hậu trường cơ bản, bàn giao kỹ thuật số</li></ul></div></div>
+          <a class="btn btn-dark" href="#booking" data-booking-service="AURA SIGNATURE">Chọn AURA SIGNATURE ↗</a>
+        </article>
+
+        <article class="package-detail" id="aura-couture">
+          <header><div><p class="eyebrow">03 / HIGH-FASHION EDITORIAL</p><h3>AURA COUTURE</h3><blockquote>“Định hình phong cách. Tỏa sáng theo cách riêng.”</blockquote></div><div class="package-meta"><strong>4.990.000 VNĐ</strong><span>Khoảng 4 giờ · 02 looks</span></div></header>
+          <div class="package-columns"><div><h4>Trải nghiệm</h4><p>Hai looks được phát triển theo cùng một tinh thần nhưng có cách thể hiện riêng. Mỗi look được đầu tư về trang phục, makeup, tóc, phụ kiện, ánh sáng, cách tạo dáng và direction, giúp bộ ảnh đa dạng mà vẫn giữ chất riêng.</p><p class="package-value">Phù hợp với KOL, Influencer, Model hoặc khách hàng yêu thời trang cần portfolio, social media và hình ảnh cá nhân chuyên nghiệp.</p></div><div><h4>Bạn sẽ nhận được</h4><ul><li>Creative direction High-Fashion/Editorial</li><li>Moodboard chi tiết cho từng look</li><li>02 layout makeup &amp; hair, styling riêng</li><li>Trang phục, phụ kiện và đạo cụ phù hợp</li><li>25 ảnh xử lý màu, 12 ảnh retouch chuyên sâu</li><li>Ảnh hậu trường, bàn giao kỹ thuật số</li></ul></div></div>
+          <a class="btn btn-dark" href="#booking" data-booking-service="AURA COUTURE">Chọn AURA COUTURE ↗</a>
+        </article>
+
+        <article class="package-detail" id="aura-brand">
+          <header><div><p class="eyebrow">04 / LOOKBOOK &amp; CAMPAIGN</p><h3>AURA BRAND</h3><blockquote>“Từ ý tưởng thương hiệu đến một ngôn ngữ hình ảnh nhất quán.”</blockquote></div><div class="package-meta"><strong>Từ 5.900.000 VNĐ</strong><span>Theo dự án · Tối đa 10 looks cơ bản</span></div></header>
+          <div class="package-columns"><div><h4>Trải nghiệm</h4><p>Dành cho local brand, thời trang, mỹ phẩm, phụ kiện, wedding dress và doanh nghiệp cần hình ảnh cho sản phẩm hoặc bộ sưu tập. Concept, màu sắc, người mẫu, makeup, styling, ánh sáng và bố cục được phối hợp thành một ngôn ngữ nhất quán.</p><p class="package-value">Báo giá được điều chỉnh theo sản phẩm, concept, người mẫu, địa điểm, ekip, setup, hậu kỳ và phạm vi sử dụng hình ảnh.</p></div><div><h4>Gói cơ bản bao gồm</h4><ul><li>Tư vấn, moodboard và định hướng hình ảnh</li><li>Photographer, ekip ánh sáng và styling</li><li>Makeup &amp; hair theo yêu cầu dự án</li><li>Tối đa 02 concept/look chính</li><li>Tối đa 10 looks sản phẩm/trang phục</li><li>20 ảnh hoàn thiện cho website và social</li></ul></div></div>
+          <a class="btn btn-dark" href="#booking" data-booking-service="AURA BRAND">Trao đổi AURA BRAND ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="portfolio section" id="portfolio">
+      <div class="section-label">03 / SELECTED WORK</div>
+      <div class="portfolio-head">
+        <div>
+          <p class="eyebrow">OUR VISUAL LANGUAGE</p>
+          <h2>Selected<br><em>works.</em></h2>
+        </div>
+        <p>Những hình ảnh đại diện cho cách L’Aura nhìn thế giới: tối giản, điện ảnh và giàu cảm xúc.<br><a class="underline-link" href="portfolio.html">Xem trang Portfolio ↗</a></p>
+      </div>
+
+      <div class="gallery">
+        <button class="gallery-card large" data-image="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=85" alt="Portrait">
+          <span>Portrait / 01</span>
+        </button>
+        <button class="gallery-card" data-image="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85">
+          <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85" alt="Fashion">
+          <span>Fashion / 02</span>
+        </button>
+        <button class="gallery-card tall" data-image="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Fashion editorial">
+          <span>Editorial / 03</span>
+        </button>
+        <button class="gallery-card" data-image="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85" alt="Model">
+          <span>Beauty / 04</span>
+        </button>
+        <button class="gallery-card wide" data-image="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1400&q=85">
+          <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1400&q=85" alt="Couple">
+          <span>Couple / 05</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section class="blog section" id="blog">
+      <div class="section-label">04 / JOURNAL</div>
+      <div class="section-heading">
+        <p class="eyebrow">L'AURA JOURNAL</p>
+        <h2>Stories &<br><em>knowledge.</em></h2>
+      </div>
+      <div class="blog-toolbar">
+        <p>Câu chuyện hậu trường, kiến thức nhiếp ảnh, concept và những góc nhìn từ studio. <a class="underline-link" href="journal.html">Xem Journal ↗</a></p>
+        <div class="blog-filters">
+          <button class="filter-btn active" data-category="all">Tất cả</button>
+          <button class="filter-btn" data-category="Photography">Photography</button>
+          <button class="filter-btn" data-category="Behind the scenes">Behind the scenes</button>
+          <button class="filter-btn" data-category="Studio">Studio</button>
+        </div>
+      </div>
+      <div class="blog-grid" id="blogGrid"></div>
+      <div class="blog-empty" id="blogEmpty" hidden>Chưa có bài viết trong danh mục này.</div>
+    </section>
+
+    <section class="quote-section">
+      <div class="quote-mark">“</div>
+      <blockquote>We don't photograph people.<br><em>We photograph how they feel.</em></blockquote>
+    </section>
+
+    <section class="pricing section" id="pricing">
+      <div class="section-label">06 / INVESTMENT</div>
+      <div class="section-heading">
+        <p class="eyebrow">PACKAGES</p>
+        <h2>Bảng giá<br><em>dịch vụ.</em></h2>
+      </div>
+
+      <div class="price-grid">
+        <article class="price-card">
+          <p>AURA PORTRAIT</p><h3>1.890.000<small> VNĐ</small></h3>
+          <ul><li>Khoảng 2 giờ</li><li>01 concept</li><li>01 makeup &amp; hair</li><li>10 ảnh hoàn thiện</li></ul>
+          <a href="booking.html?service=AURA%20PORTRAIT">Chọn gói ↗</a>
+        </article>
+        <article class="price-card featured">
+          <div class="popular">MOST CHOSEN</div>
+          <p>AURA SIGNATURE</p><h3>3.290.000<small> VNĐ</small></h3>
+          <ul><li>Khoảng 3 giờ</li><li>01 concept cá nhân hóa</li><li>01 makeup &amp; hair</li><li>15 ảnh màu · 08 ảnh retouch sâu</li></ul>
+          <a href="booking.html?service=AURA%20SIGNATURE">Chọn gói ↗</a>
+        </article>
+        <article class="price-card">
+          <p>AURA COUTURE</p><h3>4.990.000<small> VNĐ</small></h3>
+          <ul><li>Khoảng 4 giờ</li><li>02 looks High-Fashion</li><li>02 makeup &amp; hair</li><li>25 ảnh màu · 12 ảnh retouch sâu</li></ul>
+          <a href="booking.html?service=AURA%20COUTURE">Chọn gói ↗</a>
+        </article>
+        <article class="price-card brand-price-card">
+          <p>AURA BRAND</p><h3>Từ 5.900.000<small> VNĐ</small></h3>
+          <ul><li>Thời lượng theo dự án</li><li>Tối đa 02 concept chính</li><li>Tối đa 10 looks cơ bản</li><li>20 ảnh hoàn thiện</li></ul>
+          <a href="booking.html?service=AURA%20BRAND">Nhận báo giá ↗</a>
+        </article>
+      </div>
+      <p class="pricing-note">Mức giá trên là giá đề xuất trong mô hình website mô phỏng của L’AURA STUDIO. AURA BRAND được báo giá theo phạm vi công việc và yêu cầu thực tế của từng dự án.</p>
+    </section>
+
+    <section class="process section">
+      <div class="section-label">07 / PROCESS</div>
+      <div class="process-grid">
+        <div><p class="eyebrow">FROM IDEA TO IMAGE</p><h2>Hành trình<br><em>trải nghiệm.</em></h2><p class="process-copy">Bạn luôn biết điều gì sẽ diễn ra ở mỗi bước và được ekip đồng hành từ ý tưởng đầu tiên đến khi nhận ảnh.</p></div>
+        <div class="steps">
+          <div><span>01</span><div><h3>Tư vấn &amp; chọn concept</h3><p>Trao đổi phong cách, mục đích và hình ảnh mong muốn; ekip tư vấn concept và tạo hình phù hợp.</p></div></div>
+          <div><span>02</span><div><h3>Chuẩn bị tại studio</h3><p>Trang phục, makeup, làm tóc và phụ kiện được hoàn thiện, kiểm tra tổng thể trước khi chụp.</p></div></div>
+          <div><span>03</span><div><h3>Bắt đầu buổi chụp</h3><p>Photographer hướng dẫn ánh mắt, biểu cảm, góc mặt và từng tư thế theo vóc dáng của bạn.</p></div></div>
+          <div><span>04</span><div><h3>Xem ảnh &amp; điều chỉnh</h3><p>Preview ngay tại buổi chụp để cùng ekip điều chỉnh góc chụp, biểu cảm và tạo hình khi cần.</p></div></div>
+          <div><span>05</span><div><h3>Chỉnh sửa hình ảnh</h3><p>Màu sắc, ánh sáng và chi tiết được hoàn thiện theo đúng concept và hạng mục của từng gói.</p></div></div>
+          <div><span>06</span><div><h3>Bàn giao ảnh</h3><p>Ảnh hoàn thiện được gửi online; L’AURA tiếp tục hỗ trợ các vấn đề liên quan đến file ảnh.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience section" id="experience">
+      <div class="section-label">08 / CLIENT CARE</div>
+      <div class="experience-head">
+        <div><p class="eyebrow">THE L’AURA EXPERIENCE</p><h2>Được chăm chút<br><em>ở từng khoảnh khắc.</em></h2></div>
+        <p>L’AURA không chỉ tập trung vào thành phẩm mà còn xây dựng một trải nghiệm thoải mái, chu đáo và được hỗ trợ xuyên suốt.</p>
+      </div>
+
+      <div class="care-grid">
+        <article><span>01</span><h3>Trước buổi chụp</h3><p>Tư vấn 1:1 về concept, màu sắc, mục đích và ngân sách. Ekip chuẩn bị trang phục, phụ kiện, đạo cụ; xác nhận và nhắc lịch trước ngày chụp.</p></article>
+        <article><span>02</span><h3>Tại studio</h3><p>Đón tiếp, hỗ trợ tư trang, nước uống và đồ nhẹ. Với gói phù hợp, khách được hỗ trợ chăm sóc da cơ bản; makeup artist thống nhất layout trước khi thực hiện.</p></article>
+        <article><span>03</span><h3>Hướng dẫn tạo dáng</h3><p>Bạn không cần kinh nghiệm. Photographer hướng dẫn tư thế, ánh mắt, biểu cảm, tay và góc mặt; ekip liên tục kiểm tra tóc, makeup, trang phục và phụ kiện.</p></article>
+        <article><span>04</span><h3>Preview tại chỗ</h3><p>Sau một số set chụp, bạn xem nhanh hình ảnh cùng ekip. Những chi tiết chưa phù hợp sẽ được trao đổi, điều chỉnh hoặc chụp lại trong phạm vi gói.</p></article>
+        <article><span>05</span><h3>L’AURA Touch-up Check</h3><p>Trước mỗi set, ekip kiểm tra makeup → tóc → trang phục → phụ kiện → đạo cụ → thần thái → hình ảnh preview.</p></article>
+        <article><span>06</span><h3>Sau buổi chụp</h3><p>L’AURA thông báo tiến độ, trao đổi về ảnh chọn retouch, kiểm tra chất lượng và hỗ trợ giải đáp về file sau bàn giao.</p></article>
+      </div>
+
+      <div class="policy-grid">
+        <article><p class="eyebrow">WARDROBE &amp; BEAUTY</p><h3>Trang phục, phụ kiện, makeup &amp; hair</h3><p>L’AURA tư vấn và chuẩn bị lựa chọn phù hợp với concept. Yêu cầu thuê riêng, hoa tươi, đạo cụ đặc biệt hoặc địa điểm ngoài studio sẽ được báo trước. Số layout: PORTRAIT 01, SIGNATURE 01, COUTURE 02, BRAND theo phạm vi dự án.</p></article>
+        <article><p class="eyebrow">DELIVERY</p><h3>Thời gian bàn giao</h3><ul><li>Ảnh xử lý màu: 3–5 ngày làm việc</li><li>Ảnh retouch chuyên sâu: 5–7 ngày làm việc</li><li>AURA BRAND: theo quy mô dự án</li></ul></article>
+        <article><p class="eyebrow">BOOKING POLICY</p><h3>Đặt lịch &amp; thanh toán</h3><ul><li>Đặt cọc 50% để xác nhận lịch</li><li>50% còn lại thanh toán vào ngày chụp</li><li>Đổi lịch 01 lần khi báo trước tối thiểu 48 giờ</li><li>Tiền cọc không hoàn lại; được chuyển sang lịch mới khi đổi lịch hợp lệ</li><li>Phát sinh luôn được báo và xác nhận trước</li></ul></article>
+      </div>
+    </section>
+
+    <section class="booking section" id="booking">
+      <div class="booking-box">
+        <div>
+          <p class="eyebrow">LET'S CREATE</p>
+          <h2>Bạn có một<br><em>ý tưởng?</em></h2>
+          <p class="booking-copy">Hãy kể cho chúng tôi nghe. L’Aura sẽ cùng bạn biến nó thành hình ảnh.</p>
+        </div>
+
+        <form id="bookingForm" class="booking-form">
+          <label>Họ và tên<input required name="name" placeholder="Nguyễn Văn A"></label>
+          <label>Số điện thoại<input required name="phone" type="tel" placeholder="09xx xxx xxx"></label>
+          <label>Dịch vụ
+            <select name="service">
+              <option>AURA PORTRAIT</option><option>AURA SIGNATURE</option><option>AURA COUTURE</option><option>AURA BRAND</option><option>Tư vấn chọn gói</option>
+            </select>
+          </label>
+          <label>Ngày dự kiến<input name="date" type="date"></label>
+          <label class="full">Bạn muốn thực hiện concept gì?<textarea name="message" rows="4" placeholder="Mô tả ngắn về ý tưởng của bạn..."></textarea></label>
+          <button class="btn btn-dark full" type="submit">Gửi yêu cầu đặt lịch <span>↗</span></button>
+          <p class="form-note" id="formNote"></p>
+          <p class="form-admin-note">Yêu cầu sau khi gửi sẽ được lưu vào hộp thư Admin của website.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <div class="section-label">09 / CONTACT</div>
+      <div class="contact-grid">
+        <div><p class="eyebrow">COME SAY HELLO</p><h2>Let's make<br><em>something.</em></h2></div>
+        <div class="contact-info">
+          <div><span>STUDIO</span><p>HCM City, Vietnam</p></div>
+          <div><span>PHONE</span><p>09xx xxx xxx</p></div>
+          <div><span>EMAIL</span><p>LauraStudio@gmail.com</p></div>
+          <div><span>SOCIAL</span><p>
+            <a href="https://www.instagram.com/_bachnien_/" class="btn-link" target="_blank" rel="noopener noreferrer">Instagram</a> ·
+            <a href="https://www.facebook.com/profile.php?id=61579669186355&locale=vi_VN" class="btn-link" target="_blank" rel="noopener noreferrer">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="logo footer-brand"><img src="assets/laura-studio-logo.png" alt="L’AURA STUDIO" width="360" height="120"></div>
+    <p>© <span id="year"></span> L'Aura Studio. All rights reserved.</p>
+    <a href="#home">Back to top ↑</a>
+  </footer>
+
+
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-panel">
+      <button class="admin-close" id="adminClose">×</button>
+      <div class="admin-login" id="adminLogin">
+        <p class="eyebrow">L'AURA CMS</p>
+        <h2>Admin<br><em>Dashboard.</em></h2>
+        <p class="admin-muted">Đăng nhập để quản lý bài viết.</p>
+        <form id="adminLoginForm">
+          <label>Email<input type="email" id="adminEmail" placeholder="admin@studio.com" required></label>
+          <label>Mật khẩu<input type="password" id="adminPassword" placeholder="••••••••" required></label>
+          <button class="btn btn-dark" type="submit">Đăng nhập <span>↗</span></button>
+          <p class="admin-error" id="adminError"></p>
+        </form>
+        
+      </div>
+
+      <div class="admin-dashboard" id="adminDashboard" hidden>
+        
+        <div class="admin-top">
+          <div><p class="eyebrow">L'AURA CMS</p><h2>Quản lý <em>nội dung.</em></h2></div>
+          <button class="admin-logout" id="adminLogout">Đăng xuất</button>
+        </div>
+
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-admin-tab="posts">Bài viết</button>
+          <button class="admin-tab" data-admin-tab="new">+ Viết bài</button>
+          <button class="admin-tab" data-admin-tab="contacts">Liên hệ</button>
+          <button class="admin-tab" data-admin-tab="portfolio">Portfolio</button>
+          <button class="admin-tab" data-admin-tab="concepts">6 Concept</button>
+          <button class="admin-tab" data-admin-tab="comments">Bình luận</button>
+        </div>
+
+        <div class="admin-tab-content active" id="adminPostsTab">
+          <div class="admin-stats">
+            <div><span id="postCount">0</span><small>Bài viết</small></div>
+            <div><span id="publishedCount">0</span><small>Đang hiển thị</small></div>
+          </div>
+          <div id="adminPostList" class="admin-post-list"></div>
+        </div>
+
+        <div class="admin-tab-content" id="adminContactsTab">
+          <div class="admin-stats">
+            <div><span id="contactCount">0</span><small>Yêu cầu liên hệ</small></div>
+            <div><span id="newContactCount">0</span><small>Chưa xử lý</small></div>
+          </div>
+          <div id="adminContactList" class="admin-contact-list"></div>
+        </div>
+
+        <div class="admin-tab-content" id="adminNewTab">
+          <form id="postForm" class="post-form">
+            <input type="hidden" id="editPostId">
+            <label>Tiêu đề<input id="postTitle" required placeholder="Ví dụ: 5 cách tạo ánh sáng chân dung đẹp"></label>
+            <div class="form-two">
+              <label>Danh mục<select id="postCategory"><option>Photography</option><option>Behind the scenes</option><option>Studio</option></select></label>
+              <label>Ảnh đại diện<input id="postImage" placeholder="https://..."></label>
+            </div>
+            <label>Mô tả ngắn<textarea id="postExcerpt" rows="3" required placeholder="Mô tả hiển thị ngoài trang bài viết..."></textarea></label>
+            <label>Nội dung<textarea id="postContent" rows="10" required placeholder="Nội dung bài viết..."></textarea></label>
+            <div class="post-form-actions">
+              <button type="submit" class="btn btn-dark" id="postSubmit">Đăng bài <span>↗</span></button>
+              <button type="button" class="admin-secondary" id="postCancel">Hủy</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-tab-content" id="adminPortfolioTab">
+          <div class="admin-section-head">
+            <div><p class="eyebrow">VISUAL CMS</p><h3>Quản lý Portfolio</h3><p>Thêm, sửa, xóa và sắp xếp hình ảnh hiển thị.</p></div>
+            <button type="button" class="btn btn-dark" id="addPortfolioBtn">+ Thêm ảnh</button>
+          </div>
+          <div class="admin-stats"><div><span id="portfolioCount">0</span><small>Hình ảnh</small></div><div><span id="portfolioPageCount">0</span><small>Trang chính</small></div></div>
+          <div id="portfolioAdminList" class="portfolio-admin-list"></div>
+          <form id="portfolioAdminForm" class="post-form portfolio-form" hidden>
+            <input type="hidden" id="portfolioEditId">
+            <div class="form-two"><label>Tên ảnh<input id="portfolioTitle" required placeholder="Editorial Portrait"></label><label>Danh mục<input id="portfolioCategory" required placeholder="Portrait"></label></div>
+            <div class="form-two"><label>Trang hiển thị<select id="portfolioPage"><option value="portfolio">Portfolio chính</option><option value="concept">Concept cá nhân</option><option value="costume">Cổ trang</option><option value="portrait">Portrait</option><option value="fashion">Fashion & Beauty</option><option value="wedding">Wedding</option><option value="brand">Brand Campaign</option></select></label><label>Bố cục<select id="portfolioLayout"><option value="normal">Normal</option><option value="large">Large</option><option value="tall">Tall</option><option value="wide">Wide</option></select></label></div>
+            <label>URL hình ảnh<input type="url" id="portfolioImage" required placeholder="https://..."></label>
+            <div id="portfolioImagePreview" class="portfolio-image-preview" hidden><img id="portfolioPreviewImg" alt="Xem trước ảnh portfolio"></div>
+            <div class="post-form-actions"><button type="submit" class="btn btn-dark">Lưu ảnh ↗</button><button type="button" class="admin-secondary" id="cancelPortfolioBtn">Hủy</button></div>
+          </form>
+        </div>
+
+        <div class="admin-tab-content" id="adminConceptsTab">
+          <div class="admin-section-head">
+            <div><p class="eyebrow">SIGNATURE CONCEPTS CMS</p><h3>Album 6 concept nổi bật</h3><p>Đăng nhiều ảnh cho từng concept từ máy hoặc bằng URL. Ảnh tải từ máy sẽ được tối ưu trước khi lưu.</p></div>
+          </div>
+          <div class="admin-stats"><div><span id="conceptImageCount">0</span><small>Concept có album</small></div><div><span id="conceptPhotoCount">0</span><small>Tổng ảnh</small></div><div><span>6</span><small>Tổng concept</small></div></div>
+          <div id="conceptAdminList" class="concept-admin-list"></div>
+          <form id="conceptAdminForm" class="post-form concept-admin-form" hidden>
+            <input type="hidden" id="conceptEditId">
+            <div><p class="eyebrow">CẬP NHẬT ALBUM</p><h3 id="conceptEditTitle">Concept</h3></div>
+            <label>Chọn nhiều ảnh từ máy<input type="file" id="conceptImageFile" accept="image/jpeg,image/png,image/webp,image/avif" multiple></label>
+            <div class="concept-source-divider"><span>hoặc</span></div>
+            <label>URL hình ảnh<textarea id="conceptImageUrls" rows="4" placeholder="Mỗi URL ảnh trên một dòng"></textarea></label>
+            <p class="concept-admin-help">Tối đa 20 ảnh/concept và 12 MB/ảnh. Bạn có thể bổ sung ảnh nhiều lần; bấm dấu × trên ảnh xem trước để loại ảnh khỏi album.</p>
+            <div id="conceptAlbumPreview" class="concept-album-preview" hidden></div>
+            <p id="conceptAdminNote" class="form-note" role="status"></p>
+            <div class="post-form-actions"><button type="submit" class="btn btn-dark">Lưu album concept ↗</button><button type="button" class="admin-secondary" id="cancelConceptBtn">Hủy</button></div>
+          </form>
+        </div>
+
+        <div class="admin-tab-content" id="adminCommentsTab">
+          <div class="admin-section-head">
+            <div>
+              <p class="eyebrow">COMMUNITY</p>
+              <h3>Quản lý bình luận</h3>
+              <p>Admin có thể xem và xóa mọi bình luận. Người dùng chỉ có thể xóa bình luận do chính họ đăng.</p>
+            </div>
+          </div>
+          <div class="admin-stats">
+            <div><span id="adminCommentCount">0</span><small>Bình luận</small></div>
+          </div>
+          <div id="adminCommentList" class="admin-comment-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="article-modal" id="articleModal">
+    <button class="article-close" id="articleClose">×</button>
+    <article class="article-reader">
+      <img id="articleImage" src="" alt="">
+      <div class="article-reader-body">
+        <p class="eyebrow" id="articleCategory"></p>
+        <h1 id="articleTitle"></h1>
+        <p class="article-date" id="articleDate"></p>
+       <div id="articleContent"></div>
+
+<section class="comments-section">
+
+  <div class="comments-heading">
+
+    <p class="eyebrow">
+      COMMUNITY
+    </p>
+
+    <h2>
+      Bình luận<br>
+      <em>của bạn.</em>
+    </h2>
+
+  </div>
+
+  <div id="commentLoginMessage"
+       class="comment-login-message">
+    Đăng nhập để để lại bình luận.
+  </div>
+
+  <form
+    id="commentForm"
+    class="comment-form"
+    hidden
+  >
+
+    <textarea
+      id="commentText"
+      rows="4"
+      required
+      maxlength="1000"
+      placeholder="Chia sẻ suy nghĩ của bạn..."
+    ></textarea>
+
+    <div class="comment-form-bottom">
+
+      <small>
+        <span id="commentUserName"></span>
+      </small>
+
+      <button
+        type="submit"
+        class="btn btn-dark"
+      >
+        Gửi bình luận ↗
+      </button>
+
+    </div>
+
+  </form>
+
+  <div
+    id="commentList"
+    class="comment-list"
+  ></div>
+
+</section>
+      </div>
+    </article>
+  </div>
+
+  <div class="modal" id="imageModal">
+    <button class="modal-close" id="modalClose">×</button>
+    <img id="modalImage" src="" alt="Portfolio preview">
+  </div>
+
+  <script src="script.js"></script>
+  <script src="backend-sync.js"></script>
+  
+</body>
+</html>
