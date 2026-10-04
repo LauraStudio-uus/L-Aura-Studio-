@@ -7,3 +7,4 @@ window.LAURA_SUPABASE = {
   publishableKey: "sb_publishable_eo3xZv-nKH44PNDtzRqCHw_oq1tJmR8",
   storageBucket: "concept-images"
 };
+s
