@@ -569,6 +569,7 @@
               <label>Danh mục<select id="postCategory"><option>Photography</option><option>Behind the scenes</option><option>Studio</option></select></label>
               <label>Ảnh đại diện<input id="postImage" placeholder="https://..."></label>
             </div>
+            <label>Hoặc tải ảnh đại diện từ máy<input type="file" id="postImageFile" accept="image/jpeg,image/png,image/webp,image/avif"></label>
             <label>Mô tả ngắn<textarea id="postExcerpt" rows="3" required placeholder="Mô tả hiển thị ngoài trang bài viết..."></textarea></label>
             <label>Nội dung<textarea id="postContent" rows="10" required placeholder="Nội dung bài viết..."></textarea></label>
             <div class="post-form-actions">
@@ -589,7 +590,8 @@
             <input type="hidden" id="portfolioEditId">
             <div class="form-two"><label>Tên ảnh<input id="portfolioTitle" required placeholder="Editorial Portrait"></label><label>Danh mục<input id="portfolioCategory" required placeholder="Portrait"></label></div>
             <div class="form-two"><label>Trang hiển thị<select id="portfolioPage"><option value="portfolio">Portfolio chính</option><option value="concept">Concept cá nhân</option><option value="costume">Cổ trang</option><option value="portrait">Portrait</option><option value="fashion">Fashion & Beauty</option><option value="wedding">Wedding</option><option value="brand">Brand Campaign</option></select></label><label>Bố cục<select id="portfolioLayout"><option value="normal">Normal</option><option value="large">Large</option><option value="tall">Tall</option><option value="wide">Wide</option></select></label></div>
-            <label>URL hình ảnh<input type="url" id="portfolioImage" required placeholder="https://..."></label>
+            <label>URL hình ảnh<input type="url" id="portfolioImage" placeholder="https://..."></label>
+            <label>Hoặc tải ảnh từ máy<input type="file" id="portfolioImageFile" accept="image/jpeg,image/png,image/webp,image/avif"></label>
             <div id="portfolioImagePreview" class="portfolio-image-preview" hidden><img id="portfolioPreviewImg" alt="Xem trước ảnh portfolio"></div>
             <div class="post-form-actions"><button type="submit" class="btn btn-dark">Lưu ảnh ↗</button><button type="button" class="admin-secondary" id="cancelPortfolioBtn">Hủy</button></div>
           </form>

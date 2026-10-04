@@ -3,8 +3,8 @@
 Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 
 - GitHub Pages xuất bản HTML/CSS/JavaScript.
-- Supabase Database lưu album concept và yêu cầu đặt lịch.
-- Supabase Storage lưu ảnh concept.
+- Supabase Database lưu album concept, Portfolio, bài viết và yêu cầu đặt lịch.
+- Supabase Storage lưu ảnh concept, Portfolio và bài viết.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
 
@@ -14,7 +14,9 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 2. Mở **SQL Editor → New query**.
 3. Sao chép toàn bộ `database/schema.sql`, dán vào SQL Editor và bấm **Run**.
 4. Kiểm tra **Table Editor** có `admin_users`, `concepts`, `concept_images` và `bookings`.
-5. Kiểm tra **Storage** có bucket công khai `concept-images`.
+5. Kiểm tra **Storage** có bucket công khai `concept-images` và `site-images`.
+
+Nếu project đã chạy phiên bản SQL cũ, chỉ cần chạy `database/update-content-sync.sql` để thêm cột trang Portfolio và bucket ảnh mới.
 
 ## 2. Tạo tài khoản Admin
 
@@ -56,8 +58,9 @@ Không dùng `secret key` hoặc `service_role key` trong website/GitHub.
 3. Trên website nhấn biểu tượng Admin và đăng nhập bằng tài khoản đã tạo trong Supabase Auth.
 4. Mở tab **6 Concept**, tải nhiều ảnh và lưu album.
 5. Kiểm tra `concept_images` có dữ liệu và Storage bucket `concept-images` có file.
-6. Đăng xuất hoặc mở cửa sổ ẩn danh để xác nhận album vẫn hiển thị ngoài trang chủ và các trang concept.
+6. Thử tạo/xóa một bài viết và tải ảnh Portfolio, sau đó mở cửa sổ ẩn danh để xác nhận mọi thay đổi xuất hiện giống nhau.
+7. Đăng xuất hoặc mở cửa sổ ẩn danh để xác nhận album vẫn hiển thị ngoài trang chủ và các trang concept.
 
 ## Phạm vi đồng bộ
 
-Album 6 concept và yêu cầu đặt lịch được đồng bộ qua Supabase trên mọi thiết bị. Các mô-đun nội dung mẫu cũ như bài viết, portfolio phụ và tài khoản khách vẫn chạy cục bộ trong trình duyệt; chúng không có quyền truy cập dữ liệu Admin hoặc Storage.
+Album 6 concept, Portfolio, bài viết và yêu cầu đặt lịch được đồng bộ qua Supabase trên mọi thiết bị. Tài khoản khách và bình luận cũ vẫn lưu cục bộ trong trình duyệt. Bài viết/ảnh Portfolio từng lưu trong trình duyệt trước bản cập nhật này không tự chuyển vào Supabase; hãy đăng lại nội dung muốn giữ qua Admin.

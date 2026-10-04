@@ -490,6 +490,8 @@ Nguồn sáng ổn định → modifier → background → camera/lens → thi�
 
 function getPosts() {
 
+  if (window.LAURA_SUPABASE?.publishableKey && !String(window.LAURA_SUPABASE.publishableKey).includes('YOUR_') && !window.lauraPostsLoaded) return [];
+
   try {
 
     const saved =
@@ -3087,13 +3089,18 @@ function editPost(id) {
 }
 
 
-function deletePost(id) {
+async function deletePost(id) {
 
   if (
     !confirm(
       "Bạn có chắc muốn xóa bài viết này?"
     )
   ) {
+    return;
+  }
+
+  if (window.lauraCloud) {
+    try { await window.lauraCloud.deletePost(id); } catch (error) { alert(error.message); }
     return;
   }
 
@@ -3165,7 +3172,7 @@ if (postForm) {
 
   postForm.addEventListener(
     "submit",
-    event => {
+    async event => {
 
       event.preventDefault();
 
@@ -3214,6 +3221,15 @@ if (postForm) {
           )
 
       };
+
+      if (window.lauraCloud) {
+        try {
+          await window.lauraCloud.savePost(payload, editId, document.getElementById('postImageFile')?.files?.[0]);
+          resetPostForm();
+          document.querySelector('[data-admin-tab="posts"]')?.click();
+        } catch (error) { alert(error.message); }
+        return;
+      }
 
 
       if (editId) {
@@ -3857,6 +3873,7 @@ renderConceptDetailImage();
 const PORTFOLIO_KEY = "lauraStudioPortfolio";
 
 function seedPortfolioFromMarkup(){
+  if (window.LAURA_SUPABASE?.publishableKey && !String(window.LAURA_SUPABASE.publishableKey).includes('YOUR_')) return;
   if(localStorage.getItem(PORTFOLIO_KEY)!==null) return;
   const cards=[...document.querySelectorAll("#portfolio .gallery-card")];
   if(!cards.length) return;
@@ -3870,7 +3887,7 @@ function seedPortfolioFromMarkup(){
   }));
   localStorage.setItem(PORTFOLIO_KEY,JSON.stringify(items));
 }
-function getPortfolioItems(){try{const v=JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||"[]");return Array.isArray(v)?v:[]}catch{return []}}
+function getPortfolioItems(){if(window.LAURA_SUPABASE?.publishableKey && !String(window.LAURA_SUPABASE.publishableKey).includes('YOUR_') && !window.lauraPortfolioLoaded)return [];try{const v=JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||"[]");return Array.isArray(v)?v:[]}catch{return []}}
 function savePortfolioItems(items){localStorage.setItem(PORTFOLIO_KEY,JSON.stringify(items))}
 function currentPortfolioPage(){
   const file=(location.pathname.split("/").pop()||"index.html").toLowerCase();
@@ -3904,15 +3921,16 @@ renderDynamicPortfolio();
 document.getElementById("addPortfolioBtn")?.addEventListener("click",()=>openPortfolioForm());
 document.getElementById("cancelPortfolioBtn")?.addEventListener("click",()=>{resetPortfolioForm();document.getElementById("portfolioAdminForm").hidden=true});
 document.getElementById("portfolioImage")?.addEventListener("input",e=>showPortfolioPreview(e.target.value.trim()));
-document.getElementById("portfolioAdminForm")?.addEventListener("submit",e=>{
+document.getElementById("portfolioAdminForm")?.addEventListener("submit",async e=>{
   e.preventDefault();const items=getPortfolioItems(),id=document.getElementById("portfolioEditId").value;
   const item={id:id||`portfolio-${Date.now()}`,title:document.getElementById("portfolioTitle").value.trim(),category:document.getElementById("portfolioCategory").value.trim(),page:document.getElementById("portfolioPage").value,layout:document.getElementById("portfolioLayout").value,image:document.getElementById("portfolioImage").value.trim()};
+  if(window.lauraCloud){try{await window.lauraCloud.savePortfolio(item,document.getElementById('portfolioImageFile')?.files?.[0]);resetPortfolioForm();e.target.hidden=true}catch(error){alert(error.message)}return}
   const i=items.findIndex(x=>x.id===id);if(i>=0)items[i]=item;else items.unshift(item);savePortfolioItems(items);renderAdminPortfolio();renderDynamicPortfolio();resetPortfolioForm();e.target.hidden=true;
 });
-document.getElementById("portfolioAdminList")?.addEventListener("click",e=>{
+document.getElementById("portfolioAdminList")?.addEventListener("click",async e=>{
   const edit=e.target.closest("[data-portfolio-edit]"),del=e.target.closest("[data-portfolio-delete]");
   if(edit){const item=getPortfolioItems().find(x=>x.id===edit.dataset.portfolioEdit);if(item)openPortfolioForm(item)}
-  if(del&&confirm("Bạn có chắc muốn xóa ảnh này?")){savePortfolioItems(getPortfolioItems().filter(x=>x.id!==del.dataset.portfolioDelete));renderAdminPortfolio();renderDynamicPortfolio()}
+  if(del&&confirm("Bạn có chắc muốn xóa ảnh này?")){if(window.lauraCloud){try{await window.lauraCloud.deletePortfolio(del.dataset.portfolioDelete)}catch(error){alert(error.message)}return}savePortfolioItems(getPortfolioItems().filter(x=>x.id!==del.dataset.portfolioDelete));renderAdminPortfolio();renderDynamicPortfolio()}
 });
 // Delegation keeps lightbox working for images created by Admin after page load.
 document.querySelector("#portfolio .gallery")?.addEventListener("click",e=>{const card=e.target.closest(".gallery-card");if(card?.dataset.image)openImageModal(card.dataset.image)});

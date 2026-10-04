@@ -20,6 +20,92 @@
   document.documentElement.dataset.supabase = "connected";
 
   const message = error => error?.message || "Không thể kết nối Supabase.";
+  const postCache = "ddStudioPosts";
+  const portfolioCache = "lauraStudioPortfolio";
+  const uuid = value => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "");
+
+  async function uploadImage(file, folder) {
+    if (!file) return "";
+    if (!['image/jpeg', 'image/png', 'image/webp', 'image/avif'].includes(file.type) || file.size > 12 * 1024 * 1024) {
+      throw new Error('Chỉ nhận ảnh JPG, PNG, WebP, AVIF tối đa 12 MB.');
+    }
+    const ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/avif': 'avif' }[file.type];
+    const path = `${folder}/${crypto.randomUUID()}.${ext}`;
+    const { error } = await client.storage.from('site-images').upload(path, file, { contentType: file.type, upsert: false });
+    if (error) throw error;
+    return client.storage.from('site-images').getPublicUrl(path).data.publicUrl;
+  }
+
+  async function refreshPosts() {
+    const { data, error } = await client.from('posts').select('id,title,category,excerpt,content,image_url,created_at').eq('published', true).order('created_at', { ascending: false });
+    if (error) throw error;
+    localStorage.setItem(postCache, JSON.stringify((data || []).map(row => ({
+      id: row.id, title: row.title, category: row.category || '', excerpt: row.excerpt || '',
+      content: row.content || '', image: row.image_url || '', date: new Date(row.created_at).toLocaleDateString('vi-VN')
+    }))));
+    window.lauraPostsLoaded = true;
+    if (typeof renderBlog === 'function') renderBlog(document.querySelector('.filter-btn.active')?.dataset.category || 'all');
+    if (typeof renderAdminPosts === 'function') renderAdminPosts();
+  }
+
+  async function refreshPortfolio() {
+    const { data, error } = await client.from('portfolio_items').select('id,title,category,page,layout,image_url').eq('published', true).order('position').order('created_at', { ascending: false });
+    if (error) throw error;
+    localStorage.setItem(portfolioCache, JSON.stringify((data || []).map(row => ({
+      id: row.id, title: row.title, category: row.category || '', page: row.page || 'portfolio',
+      layout: row.layout || 'normal', image: row.image_url
+    }))));
+    window.lauraPortfolioLoaded = true;
+    if (typeof renderDynamicPortfolio === 'function') renderDynamicPortfolio();
+    if (typeof renderAdminPortfolio === 'function') renderAdminPortfolio();
+  }
+
+  window.lauraCloud = {
+    async savePost(payload, editId, file) {
+      if (!(await requireAdmin())) throw new Error('Vui lòng đăng nhập Admin.');
+      const image = await uploadImage(file, 'posts') || payload.image;
+      const row = { title: payload.title, category: payload.category, excerpt: payload.excerpt,
+        content: payload.content, image_url: image, published: true, updated_at: new Date().toISOString() };
+      if (uuid(editId)) {
+        const { error } = await client.from('posts').update(row).eq('id', editId);
+        if (error) throw error;
+      } else {
+        row.slug = `post-${crypto.randomUUID()}`;
+        const { error } = await client.from('posts').insert(row);
+        if (error) throw error;
+      }
+      await refreshPosts();
+    },
+    async deletePost(id) {
+      if (!(await requireAdmin())) throw new Error('Vui lòng đăng nhập Admin.');
+      if (!uuid(id)) throw new Error('Bài viết này chỉ có trên máy hiện tại. Hãy tải lại trang để xem dữ liệu chung.');
+      const { error } = await client.from('posts').delete().eq('id', id);
+      if (error) throw error;
+      await refreshPosts();
+    },
+    async savePortfolio(item, file) {
+      if (!(await requireAdmin())) throw new Error('Vui lòng đăng nhập Admin.');
+      const image = await uploadImage(file, 'portfolio') || item.image;
+      if (!image) throw new Error('Hãy chọn ảnh từ máy hoặc nhập URL ảnh.');
+      const row = { title: item.title, category: item.category, page: item.page,
+        layout: item.layout, image_url: image, published: true };
+      if (uuid(item.id)) {
+        const { error } = await client.from('portfolio_items').update(row).eq('id', item.id);
+        if (error) throw error;
+      } else {
+        const { error } = await client.from('portfolio_items').insert(row);
+        if (error) throw error;
+      }
+      await refreshPortfolio();
+    },
+    async deletePortfolio(id) {
+      if (!(await requireAdmin())) throw new Error('Vui lòng đăng nhập Admin.');
+      if (!uuid(id)) throw new Error('Ảnh này chỉ có trên máy hiện tại. Hãy tải lại trang để xem dữ liệu chung.');
+      const { error } = await client.from('portfolio_items').delete().eq('id', id);
+      if (error) throw error;
+      await refreshPortfolio();
+    }
+  };
 
   async function requireAdmin() {
     const { data: sessionData } = await client.auth.getSession();
@@ -67,7 +153,8 @@
 
   async function bootstrap() {
     try {
-      await refreshConcepts();
+      const results = await Promise.allSettled([refreshConcepts(), refreshPosts(), refreshPortfolio()]);
+      for (const result of results) if (result.status === 'rejected') console.error('Lỗi tải nội dung Supabase:', result.reason);
       if (await requireAdmin()) {
         if (typeof setAdminAuthenticated === "function") setAdminAuthenticated();
         await refreshBookings();
@@ -78,6 +165,15 @@
       console.error("Lỗi khởi tạo Supabase:", error);
     }
   }
+
+  // Cập nhật nội dung khi khách quay lại tab sau khi Admin đăng hoặc xóa.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      Promise.allSettled([refreshPosts(), refreshPortfolio()]).then(results => {
+        for (const result of results) if (result.status === 'rejected') console.error('Lỗi cập nhật nội dung:', result.reason);
+      });
+    }
+  });
 
   document.getElementById("adminLoginForm")?.addEventListener("submit", async event => {
     event.preventDefault();
@@ -98,7 +194,7 @@
       if (typeof setAdminAuthenticated === "function") setAdminAuthenticated();
       if (errorBox) errorBox.textContent = "";
       if (typeof showDashboard === "function") showDashboard();
-      await refreshBookings();
+      await Promise.all([refreshBookings(), refreshPosts(), refreshPortfolio()]);
     } catch (error) {
       if (typeof clearAdminAuthenticated === "function") clearAdminAuthenticated();
       if (errorBox) errorBox.textContent = message(error);
