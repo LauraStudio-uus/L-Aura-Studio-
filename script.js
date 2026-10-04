@@ -2335,32 +2335,10 @@ if (adminLoginForm) {
         );
 
 
-      if (
-        email ===
-          "admin@studio.com" &&
-        password ===
-          "123456"
-      ) {
-
-        setAdminAuthenticated();
-
-
-        if (error) {
-          error.textContent = "";
-        }
-
-
-        showDashboard();
-
-      } else {
-
-        if (error) {
-
-          error.textContent =
-            "Email hoặc mật khẩu không đúng.";
-
-        }
-
+      /* backend-sync.js xử lý đăng nhập an toàn qua Supabase Auth. */
+      if (error) {
+        error.textContent =
+          "Supabase chưa được cấu hình. Hãy kiểm tra file supabase-config.js.";
       }
 
     }
