@@ -340,49 +340,139 @@ html[data-theme="dark"] .music-admin-status[data-error="true"]{color:#ffb1a5}
 @media(prefers-reduced-motion:reduce){.music-toggle{transition:none}}
 @media(max-width:480px){.music-controls{gap:6px;padding-right:8px}.music-toggle{font-size:12px;padding-inline:10px}.music-volume{width:72px}}
 
-/* Header trượt thu về logo trên thiết bị có chuột. */
+/* Dynamic Island: logo luôn ở giữa, menu bung ra đều về hai phía. */
+html .header.liquid-glass,
+html .inner-page .header.liquid-glass,
+html[data-theme="dark"] .header.liquid-glass,
+html[data-theme="dark"] body.inner-page .header.liquid-glass{
+  --island-edge:clamp(12px,3vw,48px);
+  left:var(--island-edge);
+  right:var(--island-edge);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  column-gap:10px;
+  border:1px solid var(--ds-stroke);
+  border-radius:999px;
+  background:var(--ds-nav);
+  box-shadow:0 18px 48px rgba(36,28,22,.13);
+}
+.header .brand-logo{
+  grid-column:2;
+  grid-row:1;
+  justify-self:center;
+  margin:0;
+  position:relative;
+  z-index:2;
+}
+.header .brand-logo img{transition:filter .45s ease}
+.header .nav{
+  grid-column:1;
+  grid-row:1;
+  justify-self:start;
+  min-width:0;
+  gap:2px;
+  margin:0;
+}
+.header .nav a{
+  padding:7px 9px;
+  border-radius:999px;
+  font-size:11px;
+  letter-spacing:0;
+  white-space:nowrap;
+}
+.header .nav a:hover,.header .nav a[aria-current="page"]{
+  background:var(--surface-2);
+  border-color:var(--ds-stroke);
+}
+.header .header-actions{
+  grid-column:3;
+  grid-row:1;
+  justify-self:end;
+  margin:0;
+  min-width:0;
+}
+.header .menu-toggle{grid-column:3;grid-row:1;justify-self:end;margin:0}
+@media(max-width:1320px){
+  html .header.liquid-glass,
+  html .inner-page .header.liquid-glass,
+  html[data-theme="dark"] .header.liquid-glass,
+  html[data-theme="dark"] body.inner-page .header.liquid-glass{--island-edge:12px}
+  .header .header-actions{margin-right:54px}
+  .header .nav.open{
+    top:calc(100% + 12px);
+    left:0;
+    right:0;
+    padding:12px;
+    border:1px solid var(--ds-stroke);
+    border-radius:24px;
+    background:var(--surface);
+    box-shadow:var(--ds-shadow);
+  }
+  .header .nav.open a,.header .nav.open .mobile-nav-link{
+    border:0;
+    border-radius:14px;
+    padding:10px 14px;
+    text-transform:none;
+    letter-spacing:0;
+  }
+}
+@media(max-width:650px){
+  html .header.liquid-glass,
+  html .inner-page .header.liquid-glass,
+  html[data-theme="dark"] .header.liquid-glass,
+  html[data-theme="dark"] body.inner-page .header.liquid-glass{--island-edge:10px}
+  .header .header-actions{margin-right:49px}
+}
+@media(max-width:390px){
+  html .header.liquid-glass{column-gap:0}
+  .header .brand-logo{width:96px}
+  .header .header-actions{margin-right:43px}
+  .header .theme-toggle.liquid-glass,.header .menu-toggle{width:38px;min-width:38px;height:38px}
+}
 @media (hover:hover) and (pointer:fine) and (min-width:700px){
   html .header.liquid-glass.header-collapsible,
   html .inner-page .header.liquid-glass.header-collapsible,
-  html[data-theme="dark"] .header.liquid-glass.header-collapsible{
-    --header-edge:clamp(12px,3vw,48px);
-    --header-closed:194px;
-    right:auto;
-    width:calc(100vw - var(--header-edge) - var(--header-edge));
-    transition:width 1.05s cubic-bezier(.22,.68,0,1),background-color .4s ease,box-shadow .4s ease;
+  html[data-theme="dark"] .header.liquid-glass.header-collapsible,
+  html[data-theme="dark"] body.inner-page .header.liquid-glass.header-collapsible{
+    --island-closed:218px;
+    left:0;
+    right:0;
+    width:min(1500px,calc(100vw - var(--island-edge) - var(--island-edge)));
+    margin-inline:auto;
+    transition:width 1.05s cubic-bezier(.22,.68,0,1),background-color .45s ease,box-shadow .45s ease;
   }
   html .header.liquid-glass.header-collapsible.header-collapsed,
   html .inner-page .header.liquid-glass.header-collapsible.header-collapsed,
-  html[data-theme="dark"] .header.liquid-glass.header-collapsible.header-collapsed{
-    width:var(--header-closed);
+  html[data-theme="dark"] .header.liquid-glass.header-collapsible.header-collapsed,
+  html[data-theme="dark"] body.inner-page .header.liquid-glass.header-collapsible.header-collapsed{
+    width:var(--island-closed);
+    background:#211c19;
+    border-color:rgba(255,255,255,.16);
+    box-shadow:0 16px 38px rgba(18,15,13,.25);
   }
-  .header-collapsible .brand-logo{flex:0 0 auto;position:relative;z-index:1}
+  .header-collapsible.header-collapsed .brand-logo img{filter:none}
   .header-collapsible :is(.nav,.header-actions,.menu-toggle){
     opacity:1;
     visibility:visible;
-    transform:translateX(0);
-    transition:opacity .48s ease .24s,transform .9s cubic-bezier(.22,.68,0,1),visibility 0s;
+    transition:opacity .48s ease .24s,visibility 0s;
   }
   .header-collapsible.header-collapsed :is(.nav,.header-actions,.menu-toggle){
     opacity:0;
     visibility:hidden;
     pointer-events:none;
-    transform:translateX(-22px);
-    transition:opacity .28s ease,transform .78s cubic-bezier(.22,.68,0,1),visibility 0s .78s;
+    transition:opacity .28s ease,visibility 0s .78s;
   }
-  /* Account modal nằm trong header-actions; không tạo containing block cho modal fixed. */
-  .header-collapsible .header-actions,.header-collapsible.header-collapsed .header-actions{transform:none}
 }
 @media (hover:hover) and (pointer:fine) and (min-width:700px) and (max-width:1320px){
   html .header.liquid-glass.header-collapsible,
   html .inner-page .header.liquid-glass.header-collapsible,
-  html[data-theme="dark"] .header.liquid-glass.header-collapsible{
-    --header-edge:12px;
-    --header-closed:170px;
-  }
+  html[data-theme="dark"] .header.liquid-glass.header-collapsible,
+  html[data-theme="dark"] body.inner-page .header.liquid-glass.header-collapsible{--island-closed:188px}
 }
-@media (prefers-reduced-motion:reduce){
+@media(prefers-reduced-motion:reduce){
   html .header.liquid-glass.header-collapsible,
   html .inner-page .header.liquid-glass.header-collapsible,
-  .header-collapsible :is(.nav,.header-actions,.menu-toggle){transition-duration:0ms}
+  .header-collapsible :is(.nav,.header-actions,.menu-toggle),
+  .header .brand-logo img{transition-duration:0ms}
 }

@@ -8,7 +8,7 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
 - Nút ở đầu trang cho phép đổi giao diện sáng/tối; lựa chọn được ghi nhớ trên thiết bị.
-- Trên máy có chuột, header thu về logo khi rời chuột và trượt mở khi rê vào logo hoặc điều hướng bằng bàn phím. Trên thiết bị cảm ứng, menu hoạt động như trước.
+- Logo nằm giữa mép trên trong header dạng Dynamic Island. Trên máy có chuột, header thu về đảo logo ở giữa và trượt mở đều hai phía khi rê vào hoặc dùng bàn phím. Trên thiết bị cảm ứng, logo vẫn ở giữa và menu mở bằng nút chạm.
 - Trang chủ có công cụ gợi ý 3 concept miễn phí theo phong cách bạn chọn, mô tả và bảng màu ảnh (nếu thêm ảnh). Công cụ chạy trong trình duyệt, không dùng AI/API và không tải ảnh lên máy chủ.
 - Nhạc nền có trên mọi trang. Admin có thể tải MP3 hoặc dán URL âm thanh trực tiếp; khách có nút bật/tắt và thanh chỉnh âm lượng. Website có sẵn một bản nhạc mặc định.
 - `design-system.css` là lớp giao diện mới; cần tải lên cùng `style.css` để giữ đúng kiểu chữ, khoảng cách và thẻ nội dung.
