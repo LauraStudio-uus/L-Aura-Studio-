@@ -392,12 +392,38 @@ html[data-theme="dark"] body.inner-page .header.liquid-glass{
   margin:0;
   min-width:0;
 }
+.header .header-actions :is(.account-btn,.admin-link){
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  min-height:43px;
+  padding:0 16px;
+  border:1px solid var(--ds-stroke);
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:none;
+  font-size:12px;
+  font-weight:650;
+  line-height:1;
+  letter-spacing:0;
+  text-transform:none;
+  transition:background-color .25s ease,color .25s ease,border-color .25s ease,transform .25s ease;
+}
+.header .header-actions :is(.account-btn,.admin-link):hover{
+  background:var(--text);
+  color:var(--bg);
+  border-color:var(--text);
+  transform:translateY(-2px);
+}
 .header .menu-toggle{grid-column:3;grid-row:1;justify-self:end;margin:0}
 @media(max-width:1320px){
   html .header.liquid-glass,
   html .inner-page .header.liquid-glass,
   html[data-theme="dark"] .header.liquid-glass,
   html[data-theme="dark"] body.inner-page .header.liquid-glass{--island-edge:12px}
+  .header .header-actions :is(.account-btn,.admin-link){display:none}
   .header .header-actions{margin-right:54px}
   .header .nav.open{
     top:calc(100% + 12px);
