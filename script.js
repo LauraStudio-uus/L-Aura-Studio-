@@ -66,6 +66,43 @@ if (header) {
   }, { passive: true });
 }
 
+/* Thu header về logo khi rời chuột; giữ mở khi rê vào hoặc dùng bàn phím. */
+if (header) {
+  const hoverLayout = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 700px)");
+  const accountDialog = header.querySelector(".account-modal");
+  let collapseTimer = 0;
+  const canCollapse = () => hoverLayout.matches &&
+    !header.matches(":hover") &&
+    !header.contains(document.activeElement) &&
+    !accountDialog?.classList.contains("open") &&
+    !nav?.classList.contains("open");
+  const collapse = () => {
+    window.clearTimeout(collapseTimer);
+    if (canCollapse()) header.classList.add("header-collapsed");
+  };
+  const expand = () => {
+    window.clearTimeout(collapseTimer);
+    header.classList.remove("header-collapsed");
+  };
+  const scheduleCollapse = () => {
+    window.clearTimeout(collapseTimer);
+    collapseTimer = window.setTimeout(collapse, 420);
+  };
+  const updateLayout = () => {
+    window.clearTimeout(collapseTimer);
+    header.classList.toggle("header-collapsible", hoverLayout.matches);
+    if (hoverLayout.matches) collapse();
+    else header.classList.remove("header-collapsed");
+  };
+  header.addEventListener("pointerenter", expand);
+  header.addEventListener("pointerleave", scheduleCollapse);
+  header.addEventListener("focusin", expand);
+  header.addEventListener("focusout", scheduleCollapse);
+  hoverLayout.addEventListener("change", updateLayout);
+  accountDialog && new MutationObserver(scheduleCollapse).observe(accountDialog, { attributes: true, attributeFilter: ["class"] });
+  updateLayout();
+}
+
 
 /* =========================================================
    02. REVEAL ANIMATION
@@ -2501,6 +2538,9 @@ document
 
             concepts:
               "adminConceptsTab",
+
+            music:
+              "adminMusicTab",
 
             comments:
               "adminCommentsTab"

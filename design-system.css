@@ -320,3 +320,69 @@ html[data-theme="dark"] .advisor-status[data-error="true"]{color:#ffb1a5}
 .advisor-recommendations a{display:inline-block;margin-top:15px;font-size:13px;font-weight:650;color:var(--text)}
 @media(max-width:900px){.advisor-layout{grid-template-columns:1fr}.advisor-recommendations{grid-template-columns:1fr}}
 @media(max-width:600px){.advisor-form,.advisor-results{padding:22px}.advisor-upload small,.advisor-preference span{display:block;margin:3px 0 0}}
+
+/* Nhạc nền: nút nhỏ luôn truy cập được trên cả trang trong và di động. */
+.music-controls{position:fixed;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:85;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:6px 10px 6px 6px;border:1px solid var(--ds-stroke);border-radius:999px;background:var(--surface);color:var(--text);box-shadow:var(--ds-shadow)}
+.music-toggle{flex:none;min-height:38px;padding:8px 12px;border:1px solid var(--ds-stroke);border-radius:999px;background:var(--surface-2);color:var(--text);font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;cursor:pointer;transition:transform .2s ease,background-color .25s ease,color .25s ease}
+.music-toggle:hover{transform:translateY(-2px)}
+.music-toggle:focus-visible,.music-volume:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.music-volume-panel{display:flex;align-items:center;gap:8px}
+.music-volume-panel[hidden]{display:none}
+.music-volume{width:clamp(70px,11vw,112px);height:20px;accent-color:var(--accent);cursor:pointer}
+.music-volume-value{min-width:3ch;text-align:right;font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.music-feedback{position:fixed;right:clamp(16px,3vw,32px);bottom:clamp(68px,calc(3vw + 52px),84px);z-index:85;max-width:min(360px,calc(100vw - 32px));padding:12px 14px;border:1px solid var(--ds-stroke);border-radius:12px;background:var(--surface);color:var(--text);box-shadow:var(--ds-shadow);font-size:12px;line-height:1.5}
+.music-feedback[hidden]{display:none}
+.music-admin-current{padding:18px 20px;margin:20px 0 24px;border:1px solid var(--ds-stroke);border-radius:14px;background:var(--surface-2);color:var(--text);font-size:14px}
+.music-admin-form{max-width:680px}
+.music-admin-status{min-height:1.5em;font-size:13px;color:var(--muted)}
+.music-admin-status[data-error="true"]{color:#aa3d31}
+html[data-theme="dark"] .music-admin-status[data-error="true"]{color:#ffb1a5}
+@media(prefers-reduced-motion:reduce){.music-toggle{transition:none}}
+@media(max-width:480px){.music-controls{gap:6px;padding-right:8px}.music-toggle{font-size:12px;padding-inline:10px}.music-volume{width:72px}}
+
+/* Header trượt thu về logo trên thiết bị có chuột. */
+@media (hover:hover) and (pointer:fine) and (min-width:700px){
+  html .header.liquid-glass.header-collapsible,
+  html .inner-page .header.liquid-glass.header-collapsible,
+  html[data-theme="dark"] .header.liquid-glass.header-collapsible{
+    --header-edge:clamp(12px,3vw,48px);
+    --header-closed:194px;
+    right:auto;
+    width:calc(100vw - var(--header-edge) - var(--header-edge));
+    transition:width 1.05s cubic-bezier(.22,.68,0,1),background-color .4s ease,box-shadow .4s ease;
+  }
+  html .header.liquid-glass.header-collapsible.header-collapsed,
+  html .inner-page .header.liquid-glass.header-collapsible.header-collapsed,
+  html[data-theme="dark"] .header.liquid-glass.header-collapsible.header-collapsed{
+    width:var(--header-closed);
+  }
+  .header-collapsible .brand-logo{flex:0 0 auto;position:relative;z-index:1}
+  .header-collapsible :is(.nav,.header-actions,.menu-toggle){
+    opacity:1;
+    visibility:visible;
+    transform:translateX(0);
+    transition:opacity .48s ease .24s,transform .9s cubic-bezier(.22,.68,0,1),visibility 0s;
+  }
+  .header-collapsible.header-collapsed :is(.nav,.header-actions,.menu-toggle){
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateX(-22px);
+    transition:opacity .28s ease,transform .78s cubic-bezier(.22,.68,0,1),visibility 0s .78s;
+  }
+  /* Account modal nằm trong header-actions; không tạo containing block cho modal fixed. */
+  .header-collapsible .header-actions,.header-collapsible.header-collapsed .header-actions{transform:none}
+}
+@media (hover:hover) and (pointer:fine) and (min-width:700px) and (max-width:1320px){
+  html .header.liquid-glass.header-collapsible,
+  html .inner-page .header.liquid-glass.header-collapsible,
+  html[data-theme="dark"] .header.liquid-glass.header-collapsible{
+    --header-edge:12px;
+    --header-closed:170px;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  html .header.liquid-glass.header-collapsible,
+  html .inner-page .header.liquid-glass.header-collapsible,
+  .header-collapsible :is(.nav,.header-actions,.menu-toggle){transition-duration:0ms}
+}

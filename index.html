@@ -593,6 +593,7 @@
           <button class="admin-tab" data-admin-tab="contacts">Liên hệ</button>
           <button class="admin-tab" data-admin-tab="portfolio">Portfolio</button>
           <button class="admin-tab" data-admin-tab="concepts">6 Concept</button>
+          <button class="admin-tab" data-admin-tab="music">Nhạc nền</button>
           <button class="admin-tab" data-admin-tab="comments">Bình luận</button>
         </div>
 
@@ -664,6 +665,24 @@
             <div id="conceptAlbumPreview" class="concept-album-preview" hidden></div>
             <p id="conceptAdminNote" class="form-note" role="status"></p>
             <div class="post-form-actions"><button type="submit" class="btn btn-dark">Lưu album concept ↗</button><button type="button" class="admin-secondary" id="cancelConceptBtn">Hủy</button></div>
+          </form>
+        </div>
+
+        <div class="admin-tab-content" id="adminMusicTab">
+          <div class="admin-section-head">
+            <div><p class="eyebrow">SITE SOUND</p><h3>Nhạc nền website</h3><p>Thay nhạc trên toàn bộ các trang bằng MP3 tải lên hoặc URL trực tiếp. Khách có thể tự tắt tiếng.</p></div>
+          </div>
+          <div class="music-admin-current" id="musicAdminCurrent">Đang dùng bản nhạc mặc định.</div>
+          <form class="post-form music-admin-form" id="musicAdminForm">
+            <label>Tên bản nhạc<input id="musicTitle" maxlength="100" placeholder="Ví dụ: L’AURA Mood"></label>
+            <label>Tải tệp MP3 từ máy (tối đa 15 MB)<input id="musicFile" type="file" accept=".mp3,audio/mpeg"></label>
+            <label>Hoặc dán URL nhạc trực tiếp<input id="musicUrl" type="url" inputmode="url" placeholder="https://example.com/nhac-nen.mp3"></label>
+            <p class="music-admin-help">URL phải bắt đầu bằng https:// và kết thúc bằng đuôi tệp nhạc như .mp3, .ogg, .wav hoặc .m4a (có thể có tham số sau dấu ?). Link trang Zing MP3, YouTube hoặc Spotify không phát được. Nếu chọn cả tệp và URL, tệp tải lên được ưu tiên.</p>
+            <div class="post-form-actions">
+              <button class="btn btn-dark" id="musicSave" type="submit">Lưu nhạc nền ↗</button>
+              <button class="admin-secondary" id="musicReset" type="button">Dùng nhạc mặc định</button>
+            </div>
+            <p class="music-admin-status" id="musicAdminStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
 
@@ -767,5 +786,6 @@
   <script src="backend-sync.js"></script>
   <script src="concept-advisor.js" defer></script>
   
+  <script src="music.js"></script>
 </body>
 </html>

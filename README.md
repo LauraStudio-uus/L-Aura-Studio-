@@ -8,7 +8,9 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
 - Nút ở đầu trang cho phép đổi giao diện sáng/tối; lựa chọn được ghi nhớ trên thiết bị.
+- Trên máy có chuột, header thu về logo khi rời chuột và trượt mở khi rê vào logo hoặc điều hướng bằng bàn phím. Trên thiết bị cảm ứng, menu hoạt động như trước.
 - Trang chủ có công cụ gợi ý 3 concept miễn phí theo phong cách bạn chọn, mô tả và bảng màu ảnh (nếu thêm ảnh). Công cụ chạy trong trình duyệt, không dùng AI/API và không tải ảnh lên máy chủ.
+- Nhạc nền có trên mọi trang. Admin có thể tải MP3 hoặc dán URL âm thanh trực tiếp; khách có nút bật/tắt và thanh chỉnh âm lượng. Website có sẵn một bản nhạc mặc định.
 - `design-system.css` là lớp giao diện mới; cần tải lên cùng `style.css` để giữ đúng kiểu chữ, khoảng cách và thẻ nội dung.
 
 ## 1. Khởi tạo Supabase
@@ -20,6 +22,7 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 5. Kiểm tra **Storage** có bucket công khai `concept-images` và `site-images`.
 
 Nếu project đã chạy phiên bản SQL cũ, chỉ cần chạy `database/update-content-sync.sql` để thêm cột trang Portfolio và bucket ảnh mới.
+Để bật quyền Admin thay nhạc nền trên project đã có, chạy thêm `database/background-music.sql` một lần. Project mới chạy `schema.sql` đã bao gồm phần này.
 
 ## 2. Tạo tài khoản Admin
 
@@ -63,6 +66,7 @@ Không dùng `secret key` hoặc `service_role key` trong website/GitHub.
 5. Kiểm tra `concept_images` có dữ liệu và Storage bucket `concept-images` có file.
 6. Thử tạo/xóa một bài viết và tải ảnh Portfolio, sau đó mở cửa sổ ẩn danh để xác nhận mọi thay đổi xuất hiện giống nhau.
 7. Đăng xuất hoặc mở cửa sổ ẩn danh để xác nhận album vẫn hiển thị ngoài trang chủ và các trang concept.
+8. Trong Admin → **Nhạc nền**, tải MP3 (tối đa 15 MB) hoặc dán URL âm thanh trực tiếp, rồi mở một trang khác để kiểm tra. Có thể bấm **Dùng nhạc mặc định** để khôi phục.
 
 ## Phạm vi đồng bộ
 
@@ -73,3 +77,9 @@ Album 6 concept, Portfolio, bài viết và yêu cầu đặt lịch được đ
 Mở phần **Khám phá concept**, chọn phong cách hoặc nhập mô tả; bạn cũng có thể thêm ảnh tham khảo JPG/PNG/WebP dưới 8 MB. Nhấn **Xem gợi ý concept** để nhận 3 hướng tạo hình và mở album tương ứng. Ảnh chỉ được đọc tạm trên thiết bị để lấy màu sắc, độ sáng tổng thể; công cụ không phân tích khuôn mặt, không lưu ảnh và không gửi ảnh lên mạng. Có thể dùng cả khi mở `index.html` bằng `file://`.
 
 Tính năng này không cần OpenAI, Supabase Edge Function, API key hay SQL riêng. Supabase vẫn cần cho album, Portfolio, bài viết, đặt lịch và Admin theo các bước 1–5.
+
+## 7. Nhạc nền trên mọi trang
+
+Website đã kèm bản nhạc mặc định trong `assets/laura-ambient.wav`. Admin có thể thay bằng MP3 tải từ máy hoặc URL âm thanh trực tiếp ở tab **Nhạc nền**. MP3 tải từ máy được lưu trong Supabase Storage bucket `site-audio`; URL chỉ được ghi vào `site_settings`, không sao chép file vào Storage. Link phải là HTTPS trỏ thẳng tới file nhạc có đuôi như `.mp3`, `.ogg`, `.wav`, `.m4a`, `.aac` hoặc `.opus` (có thể kèm tham số `?...`). Link trang bài hát Zing MP3 dạng `.html`, YouTube hay Spotify không phải file âm thanh nên không phát được. Nguồn URL bên ngoài phải tiếp tục hoạt động và cho phép website phát nhạc. Sau khi tải đủ các file website lên GitHub Pages, chạy `database/background-music.sql` trong SQL Editor nếu dùng project cũ. Không cần dịch vụ âm nhạc trả phí.
+
+Trình duyệt có thể chặn nhạc có tiếng tự phát. Website sẽ thử phát khi mở trang và tự bắt đầu sau thao tác đầu tiên của khách nếu bị chặn. Chỉ nút **♫ Bật nhạc / Nhạc nền** hiện ở góc dưới; bấm nút để mở thanh âm lượng 0–100%. Khi thanh đang mở, bấm **♫ Tắt nhạc** để tắt; bấm ra ngoài để thu gọn thanh mà vẫn phát. Cả lựa chọn bật/tắt và mức âm lượng được ghi nhớ trên thiết bị.
