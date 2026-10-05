@@ -8,6 +8,7 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
 - Nút ở đầu trang cho phép đổi giao diện sáng/tối; lựa chọn được ghi nhớ trên thiết bị.
+- Trang chủ có công cụ gợi ý 3 concept miễn phí theo phong cách bạn chọn, mô tả và bảng màu ảnh (nếu thêm ảnh). Công cụ chạy trong trình duyệt, không dùng AI/API và không tải ảnh lên máy chủ.
 - `design-system.css` là lớp giao diện mới; cần tải lên cùng `style.css` để giữ đúng kiểu chữ, khoảng cách và thẻ nội dung.
 
 ## 1. Khởi tạo Supabase
@@ -66,3 +67,9 @@ Không dùng `secret key` hoặc `service_role key` trong website/GitHub.
 ## Phạm vi đồng bộ
 
 Album 6 concept, Portfolio, bài viết và yêu cầu đặt lịch được đồng bộ qua Supabase trên mọi thiết bị. Tài khoản khách và bình luận cũ vẫn lưu cục bộ trong trình duyệt. Bài viết/ảnh Portfolio từng lưu trong trình duyệt trước bản cập nhật này không tự chuyển vào Supabase; hãy đăng lại nội dung muốn giữ qua Admin.
+
+## 6. Gợi ý concept miễn phí trên trang chủ
+
+Mở phần **Khám phá concept**, chọn phong cách hoặc nhập mô tả; bạn cũng có thể thêm ảnh tham khảo JPG/PNG/WebP dưới 8 MB. Nhấn **Xem gợi ý concept** để nhận 3 hướng tạo hình và mở album tương ứng. Ảnh chỉ được đọc tạm trên thiết bị để lấy màu sắc, độ sáng tổng thể; công cụ không phân tích khuôn mặt, không lưu ảnh và không gửi ảnh lên mạng. Có thể dùng cả khi mở `index.html` bằng `file://`.
+
+Tính năng này không cần OpenAI, Supabase Edge Function, API key hay SQL riêng. Supabase vẫn cần cho album, Portfolio, bài viết, đặt lịch và Admin theo các bước 1–5.

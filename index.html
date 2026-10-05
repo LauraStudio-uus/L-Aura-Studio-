@@ -241,6 +241,7 @@
         <div class="hero-actions">
           <a class="btn btn-light liquid-glass-card" href="services.html">Khám phá dịch vụ <span>↗</span></a>
           <a class="text-link" href="booking.html">Đặt lịch tư vấn ↓</a>
+          <a class="text-link" href="#ai-advisor">Khám phá concept ↗</a>
         </div>
       </div>
       <div class="hero-meta">
@@ -391,6 +392,51 @@
       </div>
       <div class="blog-grid" id="blogGrid"></div>
       <div class="blog-empty" id="blogEmpty" hidden>Chưa có bài viết trong danh mục này.</div>
+    </section>
+
+    <section class="ai-advisor section" id="ai-advisor" aria-labelledby="advisorTitle">
+      <div class="section-label">05 / CONCEPT ADVISOR</div>
+      <div class="section-heading">
+        <p class="eyebrow">L’AURA CONCEPT MATCH</p>
+        <h2>Khám phá concept<br><em>hợp với bạn.</em></h2>
+      </div>
+      <div class="advisor-layout">
+        <div class="advisor-intro">
+          <h3 id="advisorTitle">Chọn một cảm hứng, khám phá phiên bản của bạn.</h3>
+          <p>Chọn phong cách bạn thích và thêm ảnh tham khảo nếu muốn. Công cụ sẽ đối chiếu lựa chọn của bạn cùng màu sắc, độ sáng tổng thể của ảnh để gợi ý 3 trong 6 concept L’AURA.</p>
+          <p class="advisor-privacy">Đây là công cụ gợi ý theo quy tắc, không phải AI phân tích gương mặt. Ảnh chỉ được xử lý trên thiết bị của bạn; không tải lên máy chủ và không được lưu lại.</p>
+        </div>
+        <form class="advisor-form" id="advisorForm">
+          <label class="advisor-upload" for="advisorPhoto">
+            <span>Thêm ảnh tham khảo <small>Không bắt buộc · JPG, PNG hoặc WebP · tối đa 8 MB</small></span>
+            <input id="advisorPhoto" type="file" accept="image/jpeg,image/png,image/webp">
+          </label>
+          <img class="advisor-preview" id="advisorPreview" alt="Ảnh bạn đã chọn" hidden>
+          <label class="advisor-mood" for="advisorMood">Phong cách bạn muốn thử
+            <select id="advisorMood">
+              <option value="">Để công cụ gợi ý từ ảnh hoặc mô tả</option>
+              <option value="angelic">Trong trẻo, thanh thoát</option>
+              <option value="dark-gothic">Bí ẩn, cá tính</option>
+              <option value="floral-muse">Lãng mạn, nữ tính</option>
+              <option value="fairy-pastoral">Tự do, mộng mơ</option>
+              <option value="high-fashion">Thời trang, nổi bật</option>
+              <option value="oriental-period">Cổ điển, phương Đông</option>
+            </select>
+          </label>
+          <label class="advisor-preference" for="advisorPreference">Bạn muốn thể hiện điều gì? <span>(không bắt buộc)</span>
+            <textarea id="advisorPreference" rows="3" maxlength="400" placeholder="Ví dụ: dịu dàng nhưng vẫn cá tính, thích màu trầm..."></textarea>
+          </label>
+          <p class="advisor-local-note">✦ Miễn phí · Không cần đăng nhập · Ảnh không rời thiết bị</p>
+          <button class="btn btn-dark" id="advisorSubmit" type="submit">Xem gợi ý concept ↗</button>
+          <p class="advisor-status" id="advisorStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="advisor-results" id="advisorResults" aria-live="polite" hidden>
+        <p class="eyebrow">GỢI Ý DÀNH CHO BẠN</p>
+        <p class="advisor-summary" id="advisorSummary"></p>
+        <div class="advisor-recommendations" id="advisorRecommendations"></div>
+        <a class="btn btn-dark" href="booking.html?service=T%C6%B0%20v%E1%BA%A5n%20ch%E1%BB%8Dn%20g%C3%B3i">Trao đổi với L’AURA ↗</a>
+      </div>
     </section>
 
     <section class="quote-section">
@@ -719,6 +765,7 @@
   <script src="supabase-config.js"></script>
   <script src="script.js"></script>
   <script src="backend-sync.js"></script>
+  <script src="concept-advisor.js" defer></script>
   
 </body>
 </html>

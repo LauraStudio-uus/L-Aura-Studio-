@@ -793,8 +793,6 @@ html[data-theme="dark"] .concept-admin-copy p,html[data-theme="dark"] .concept-a
 .pricing .price-grid{grid-template-columns:repeat(4,1fr)}
 .pricing .price-card{min-height:470px}
 .pricing .price-card li{color:#777;border-color:#d8d0c2}
-.brand-price-card{background:#29251f;color:#fffdf8}
-.brand-price-card li{color:#c7c0b4!important;border-color:#504b43!important}
 .pricing-note{margin-top:22px;max-width:850px;color:var(--muted);font-size:12px;line-height:1.8}
 .process-copy{max-width:480px;color:#9b958c;margin-top:28px;line-height:1.8}
 
