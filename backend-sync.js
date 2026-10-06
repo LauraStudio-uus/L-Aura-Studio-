@@ -50,6 +50,8 @@
     window.lauraPostsLoaded = true;
     if (typeof renderBlog === 'function') renderBlog(document.querySelector('.filter-btn.active')?.dataset.category || 'all');
     if (typeof renderAdminPosts === 'function') renderAdminPosts();
+    if (typeof refreshInternalLinkChoices === 'function') refreshInternalLinkChoices();
+    if (typeof openRequestedArticle === 'function') openRequestedArticle();
   }
 
   async function refreshPortfolio() {

@@ -6,6 +6,7 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 - Supabase Database lưu album concept, Portfolio, bài viết và yêu cầu đặt lịch.
 - Supabase Storage lưu ảnh concept, Portfolio và bài viết.
 - Trong Admin → Bài viết, đặt con trỏ trong ô Nội dung rồi chọn một hoặc nhiều ảnh từ máy (tối đa 10 ảnh/lần, mỗi ảnh tối đa 12 MB) hoặc chèn URL ảnh HTTPS trực tiếp. Ảnh nằm giữa các đoạn văn trong bài sau khi bấm Đăng bài/Lưu bài. Ảnh từ máy được tải vào bucket `site-images` hiện có; không cần chạy thêm SQL. Ảnh đại diện vẫn được chọn riêng.
+- Trong Admin → Bài viết → **Liên kết nội bộ**, bôi đen chữ trong ô Nội dung (hoặc nhập chữ hiển thị), chọn một trang của L’AURA hay bài viết đã đăng, rồi bấm **Chèn liên kết**. Liên kết tới bài viết dùng địa chỉ `journal.html?post=ID`, mở đúng bài khi khách truy cập trực tiếp. Bấm lưu bài sau khi chèn; không cần thay đổi database.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
 - Nút ở đầu trang cho phép đổi giao diện sáng/tối; lựa chọn được ghi nhớ trên thiết bị.

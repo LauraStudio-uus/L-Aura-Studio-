@@ -633,6 +633,15 @@
               </div>
               <p class="post-inline-status" id="postInlineImageStatus" role="status" aria-live="polite"></p>
             </div>
+            <div class="post-inline-tools post-link-tools">
+              <p>Liên kết nội bộ <small>Bôi đen chữ trong ô Nội dung hoặc nhập tên liên kết, rồi chọn trang hay bài viết cần dẫn tới.</small></p>
+              <div class="post-link-fields">
+                <label>Chữ hiển thị<input type="text" id="postLinkText" maxlength="160" placeholder="Ví dụ: Xem AURA COUTURE"></label>
+                <label>Trang hoặc bài viết<select id="postLinkTarget"><option value="">Chọn đích đến</option></select></label>
+                <button type="button" class="admin-secondary" id="postLinkInsert">Chèn liên kết</button>
+              </div>
+              <p class="post-inline-status" id="postLinkStatus" role="status" aria-live="polite"></p>
+            </div>
             <div class="post-form-actions">
               <button type="submit" class="btn btn-dark" id="postSubmit">Đăng bài <span>↗</span></button>
               <button type="button" class="admin-secondary" id="postCancel">Hủy</button>

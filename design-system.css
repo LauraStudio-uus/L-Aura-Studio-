@@ -533,8 +533,21 @@ html[data-theme="dark"] body.inner-page .header.liquid-glass{
 .post-inline-status{min-height:1.5em;margin:0;color:var(--muted);font-size:12px}
 .post-inline-status[data-error="true"]{color:#a23631}
 html[data-theme="dark"] .post-inline-status[data-error="true"]{color:#ffaaa3}
+.post-link-fields{display:grid;grid-template-columns:1fr 1fr auto;align-items:end;gap:12px}
+.post-link-fields label{min-width:0}
+.post-link-fields button{min-height:43px;border-radius:12px}
 .article-reader-body #articleContent{white-space:normal}
 .article-reader-body #articleContent p{margin:0 0 1.4em;white-space:pre-line}
+.article-reader-body #articleContent p a{
+  color:#77552e;
+  font-weight:650;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:4px;
+}
+.article-reader-body #articleContent p a:hover{color:#4a2d15}
+html[data-theme="dark"] .article-reader-body #articleContent p a{color:#e5c991}
+html[data-theme="dark"] .article-reader-body #articleContent p a:hover{color:#fff1d0}
 .article-reader-body #articleContent figure{margin:28px 0 34px}
 .article-reader-body #articleContent figure img{
   display:block;
@@ -553,5 +566,7 @@ html[data-theme="dark"] .post-inline-status[data-error="true"]{color:#ffaaa3}
 @media(max-width:600px){
   .post-inline-url{display:grid}
   .post-inline-url button{justify-self:start}
+  .post-link-fields{grid-template-columns:1fr}
+  .post-link-fields button{justify-self:start}
   .article-reader-body #articleContent figure{margin:22px 0 28px}
 }

@@ -750,6 +750,50 @@ const articleClose =
 
 let currentArticleId = null;
 
+const INTERNAL_LINK_PAGES = [
+  ["Trang chủ", "index.html"], ["Studio", "studio.html"],
+  ["Dịch vụ", "services.html"], ["Trải nghiệm", "experience.html"],
+  ["Portfolio", "portfolio.html"], ["Journal", "journal.html"],
+  ["Bảng giá", "pricing.html"], ["Đặt lịch", "booking.html"],
+  ["Liên hệ", "contact.html"],
+  ["AURA PORTRAIT", "aura-portrait.html"],
+  ["AURA SIGNATURE", "aura-signature.html"],
+  ["AURA COUTURE", "aura-couture.html"],
+  ["AURA BRAND", "aura-brand.html"],
+  ["Angelic / Ethereal", "concept-angelic.html"],
+  ["Dark / Gothic", "concept-dark-gothic.html"],
+  ["Floral / Muse", "concept-floral-muse.html"],
+  ["Fairy / Pastoral", "concept-fairy-pastoral.html"],
+  ["High Fashion / Glamour", "concept-high-fashion.html"],
+  ["Oriental / Period", "concept-oriental-period.html"]
+];
+
+function safeInternalArticleHref(value) {
+  const match = String(value || "").match(/^([a-z0-9-]+\.html)(?:\?post=([a-zA-Z0-9-]{1,80}))?(?:#([a-zA-Z0-9_-]+))?$/);
+  if (!match || !INTERNAL_LINK_PAGES.some(([, page]) => page === match[1])) return "";
+  if (match[2] && match[1] !== "journal.html") return "";
+  return value;
+}
+
+function renderArticleInlineText(container, value) {
+  const pattern = /\[([^\]\r\n]{1,160})\]\(([^)\s]+)\)/g;
+  let cursor = 0;
+  for (const match of value.matchAll(pattern)) {
+    container.appendChild(document.createTextNode(value.slice(cursor, match.index)));
+    const href = safeInternalArticleHref(match[2]);
+    if (href) {
+      const link = document.createElement("a");
+      link.href = href;
+      link.textContent = match[1];
+      container.appendChild(link);
+    } else {
+      container.appendChild(document.createTextNode(match[0]));
+    }
+    cursor = match.index + match[0].length;
+  }
+  container.appendChild(document.createTextNode(value.slice(cursor)));
+}
+
 function inlineArticleImage(line) {
   const match = line.trim().match(/^!\[([^\]]{0,200})\]\((https:\/\/[^\s)]+)\)$/);
   if (!match) return null;
@@ -767,7 +811,7 @@ function renderArticleBody(content, container) {
   const appendParagraph = () => {
     if (!paragraphLines.length) return;
     const paragraph = document.createElement("p");
-    paragraph.textContent = paragraphLines.join("\n");
+    renderArticleInlineText(paragraph, paragraphLines.join("\n"));
     container.appendChild(paragraph);
     paragraphLines = [];
   };
@@ -897,6 +941,14 @@ function openArticle(post) {
 
   }
 
+}
+
+function openRequestedArticle() {
+  if (!location.pathname.endsWith("/journal.html")) return;
+  const postId = new URLSearchParams(location.search).get("post");
+  if (!postId || currentArticleId === postId) return;
+  const post = getPosts().find(item => String(item.id) === postId);
+  if (post) openArticle(post);
 }
 
 
@@ -3077,6 +3129,8 @@ function resetPostForm() {
 
   const inlineStatus = document.getElementById("postInlineImageStatus");
   if (inlineStatus) inlineStatus.textContent = "";
+  const linkStatus = document.getElementById("postLinkStatus");
+  if (linkStatus) linkStatus.textContent = "";
 
 
   if (editId) {
@@ -3267,7 +3321,73 @@ const postInlineImageFile = document.getElementById("postInlineImageFile");
 const postInlineImageUrl = document.getElementById("postInlineImageUrl");
 const postInlineImageUrlInsert = document.getElementById("postInlineImageUrlInsert");
 const postInlineImageStatus = document.getElementById("postInlineImageStatus");
+const postLinkText = document.getElementById("postLinkText");
+const postLinkTarget = document.getElementById("postLinkTarget");
+const postLinkInsert = document.getElementById("postLinkInsert");
+const postLinkStatus = document.getElementById("postLinkStatus");
 let postInlineImageUploading = false;
+
+function refreshInternalLinkChoices() {
+  if (!postLinkTarget) return;
+  const previous = postLinkTarget.value;
+  postLinkTarget.replaceChildren();
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Chọn đích đến";
+  postLinkTarget.appendChild(placeholder);
+  const pages = document.createElement("optgroup");
+  pages.label = "Trang của L’AURA";
+  INTERNAL_LINK_PAGES.forEach(([label, href]) => {
+    const option = document.createElement("option");
+    option.value = href;
+    option.textContent = label;
+    pages.appendChild(option);
+  });
+  postLinkTarget.appendChild(pages);
+  const posts = getPosts().filter(post => /^[a-zA-Z0-9-]{1,80}$/.test(String(post.id)));
+  if (posts.length) {
+    const articles = document.createElement("optgroup");
+    articles.label = "Bài viết đã đăng";
+    posts.forEach(post => {
+      const option = document.createElement("option");
+      option.value = `journal.html?post=${post.id}`;
+      option.textContent = post.title || "Bài viết";
+      articles.appendChild(option);
+    });
+    postLinkTarget.appendChild(articles);
+  }
+  if (safeInternalArticleHref(previous)) postLinkTarget.value = previous;
+}
+
+if (postLinkTarget) {
+  refreshInternalLinkChoices();
+  postLinkTarget.addEventListener("focus", refreshInternalLinkChoices);
+}
+
+if (postLinkInsert) {
+  postLinkInsert.addEventListener("click", () => {
+    const href = safeInternalArticleHref(postLinkTarget?.value);
+    const start = postContentInput?.selectionStart ?? 0;
+    const end = postContentInput?.selectionEnd ?? start;
+    const selected = postContentInput?.value.slice(start, end) || "";
+    const label = (postLinkText?.value.trim() || selected.trim()).replace(/[\[\]\r\n]/g, " ").trim().slice(0, 160);
+    if (!href || !label) {
+      if (postLinkStatus) {
+        postLinkStatus.textContent = "Hãy chọn trang/bài viết và nhập chữ hiển thị hoặc bôi đen chữ trong nội dung.";
+        postLinkStatus.dataset.error = "true";
+      }
+      return;
+    }
+    postContentInput.setRangeText(`[${label}](${href})`, start, end, "end");
+    postContentInput.dispatchEvent(new Event("input", { bubbles: true }));
+    postContentInput.focus();
+    postLinkText.value = "";
+    if (postLinkStatus) {
+      postLinkStatus.textContent = "Đã chèn liên kết tại vị trí con trỏ. Lưu bài để cập nhật.";
+      postLinkStatus.dataset.error = "false";
+    }
+  });
+}
 
 function setPostInlineImageStatus(message, isError = false) {
   if (!postInlineImageStatus) return;
@@ -3515,6 +3635,8 @@ document.addEventListener(
 ========================================================= */
 
 renderBlog();
+
+openRequestedArticle();
 
 updateCommentUI();
 
