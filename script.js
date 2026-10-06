@@ -750,6 +750,54 @@ const articleClose =
 
 let currentArticleId = null;
 
+function inlineArticleImage(line) {
+  const match = line.trim().match(/^!\[([^\]]{0,200})\]\((https:\/\/[^\s)]+)\)$/);
+  if (!match) return null;
+  try {
+    const url = new URL(match[2]);
+    return url.protocol === "https:" ? { alt: match[1], url: url.href } : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function renderArticleBody(content, container) {
+  container.replaceChildren();
+  let paragraphLines = [];
+  const appendParagraph = () => {
+    if (!paragraphLines.length) return;
+    const paragraph = document.createElement("p");
+    paragraph.textContent = paragraphLines.join("\n");
+    container.appendChild(paragraph);
+    paragraphLines = [];
+  };
+
+  String(content || "").split(/\r?\n/).forEach(line => {
+    const image = inlineArticleImage(line);
+    if (image) {
+      appendParagraph();
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      img.src = image.url;
+      img.alt = image.alt || "Ảnh trong bài viết";
+      img.loading = "lazy";
+      img.decoding = "async";
+      figure.appendChild(img);
+      if (image.alt) {
+        const caption = document.createElement("figcaption");
+        caption.textContent = image.alt;
+        figure.appendChild(caption);
+      }
+      container.appendChild(figure);
+    } else if (!line.trim()) {
+      appendParagraph();
+    } else {
+      paragraphLines.push(line);
+    }
+  });
+  appendParagraph();
+}
+
 
 function openArticle(post) {
 
@@ -825,8 +873,7 @@ function openArticle(post) {
 
   if (articleContent) {
 
-    articleContent.textContent =
-      post.content || "";
+    renderArticleBody(post.content, articleContent);
 
   }
 
@@ -3028,6 +3075,9 @@ function resetPostForm() {
     form.reset();
   }
 
+  const inlineStatus = document.getElementById("postInlineImageStatus");
+  if (inlineStatus) inlineStatus.textContent = "";
+
 
   if (editId) {
     editId.value = "";
@@ -3212,6 +3262,88 @@ if (postCancel) {
 }
 
 
+const postContentInput = document.getElementById("postContent");
+const postInlineImageFile = document.getElementById("postInlineImageFile");
+const postInlineImageUrl = document.getElementById("postInlineImageUrl");
+const postInlineImageUrlInsert = document.getElementById("postInlineImageUrlInsert");
+const postInlineImageStatus = document.getElementById("postInlineImageStatus");
+let postInlineImageUploading = false;
+
+function setPostInlineImageStatus(message, isError = false) {
+  if (!postInlineImageStatus) return;
+  postInlineImageStatus.textContent = message;
+  postInlineImageStatus.dataset.error = String(isError);
+}
+
+function insertPostInlineImage(url, alt = "Ảnh bài viết") {
+  if (!postContentInput) return;
+  const safeAlt = alt.replace(/[\[\]\r\n]/g, " ").trim().slice(0, 200) || "Ảnh bài viết";
+  const start = postContentInput.selectionStart;
+  const end = postContentInput.selectionEnd;
+  const before = postContentInput.value.slice(0, start);
+  const after = postContentInput.value.slice(end);
+  const prefix = before && !before.endsWith("\n\n") ? (before.endsWith("\n") ? "\n" : "\n\n") : "";
+  const suffix = after && !after.startsWith("\n\n") ? (after.startsWith("\n") ? "\n" : "\n\n") : "";
+  postContentInput.setRangeText(`${prefix}![${safeAlt}](${url})${suffix}`, start, end, "end");
+  postContentInput.dispatchEvent(new Event("input", { bubbles: true }));
+  postContentInput.focus();
+}
+
+if (postInlineImageUrlInsert) {
+  postInlineImageUrlInsert.addEventListener("click", () => {
+    const raw = postInlineImageUrl?.value.trim() || "";
+    try {
+      const url = new URL(raw);
+      if (url.protocol !== "https:" || /[\s)]/.test(raw)) throw new Error("invalid");
+      insertPostInlineImage(url.href);
+      postInlineImageUrl.value = "";
+      setPostInlineImageStatus("Đã chèn ảnh tại vị trí con trỏ. Đăng bài để lưu thay đổi.");
+    } catch (_) {
+      setPostInlineImageStatus("Hãy nhập URL HTTPS trực tiếp của ảnh.", true);
+    }
+  });
+}
+
+if (postInlineImageFile) {
+  postInlineImageFile.addEventListener("change", async () => {
+    const files = Array.from(postInlineImageFile.files || []);
+    if (!files.length) return;
+    if (!window.lauraCloud?.uploadPostInlineImage) {
+      setPostInlineImageStatus("Cần kết nối Supabase và đăng nhập Admin để tải ảnh từ máy. Bạn cũng có thể chèn URL ảnh.", true);
+      postInlineImageFile.value = "";
+      return;
+    }
+    if (files.length > 10) {
+      setPostInlineImageStatus("Mỗi lần chọn tối đa 10 ảnh.", true);
+      postInlineImageFile.value = "";
+      return;
+    }
+    postInlineImageUploading = true;
+    postInlineImageFile.disabled = true;
+    if (postInlineImageUrlInsert) postInlineImageUrlInsert.disabled = true;
+    const submit = document.getElementById("postSubmit");
+    if (submit) submit.disabled = true;
+    let uploaded = 0;
+    try {
+      for (const file of files) {
+        setPostInlineImageStatus(`Đang tải ảnh ${uploaded + 1}/${files.length}…`);
+        const url = await window.lauraCloud.uploadPostInlineImage(file);
+        insertPostInlineImage(url, file.name.replace(/\.[^.]+$/, ""));
+        uploaded++;
+      }
+      setPostInlineImageStatus(`Đã chèn ${uploaded} ảnh. Đăng bài để lưu thay đổi.`);
+    } catch (error) {
+      setPostInlineImageStatus(`Đã chèn ${uploaded} ảnh. ${error.message || "Không tải được ảnh."}`, true);
+    } finally {
+      postInlineImageUploading = false;
+      postInlineImageFile.disabled = false;
+      if (postInlineImageUrlInsert) postInlineImageUrlInsert.disabled = false;
+      if (submit) submit.disabled = false;
+      postInlineImageFile.value = "";
+    }
+  });
+}
+
 const postForm =
   document.getElementById(
     "postForm"
@@ -3225,6 +3357,8 @@ if (postForm) {
     async event => {
 
       event.preventDefault();
+
+      if (postInlineImageUploading) return;
 
 
       const posts =

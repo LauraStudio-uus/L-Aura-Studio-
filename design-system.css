@@ -502,3 +502,56 @@ html[data-theme="dark"] body.inner-page .header.liquid-glass{
   .header-collapsible :is(.nav,.header-actions,.menu-toggle),
   .header .brand-logo img{transition-duration:0ms}
 }
+
+/* Images inserted between paragraphs in Admin articles. */
+.post-inline-tools{
+  display:grid;
+  gap:14px;
+  padding:18px 20px;
+  border:1px solid var(--ds-stroke);
+  border-radius:18px;
+  background:var(--surface-2);
+}
+.post-inline-tools>p:first-child{
+  margin:0;
+  color:var(--text);
+  font-size:13px;
+  font-weight:650;
+}
+.post-inline-tools small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:400;
+  line-height:1.5;
+}
+.post-inline-url{display:flex;align-items:end;gap:12px}
+.post-inline-url label{flex:1;min-width:0}
+.post-inline-url button{flex:none;min-height:43px;border-radius:12px}
+.post-inline-tools input[type="file"]{font-size:12px;line-height:1.5}
+.post-inline-status{min-height:1.5em;margin:0;color:var(--muted);font-size:12px}
+.post-inline-status[data-error="true"]{color:#a23631}
+html[data-theme="dark"] .post-inline-status[data-error="true"]{color:#ffaaa3}
+.article-reader-body #articleContent{white-space:normal}
+.article-reader-body #articleContent p{margin:0 0 1.4em;white-space:pre-line}
+.article-reader-body #articleContent figure{margin:28px 0 34px}
+.article-reader-body #articleContent figure img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  background:var(--surface-2);
+}
+.article-reader-body #articleContent figcaption{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  text-align:center;
+}
+@media(max-width:600px){
+  .post-inline-url{display:grid}
+  .post-inline-url button{justify-self:start}
+  .article-reader-body #articleContent figure{margin:22px 0 28px}
+}

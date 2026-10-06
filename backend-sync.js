@@ -65,6 +65,10 @@
   }
 
   window.lauraCloud = {
+    async uploadPostInlineImage(file) {
+      if (!(await requireAdmin())) throw new Error('Vui lòng đăng nhập Admin để tải ảnh vào bài viết.');
+      return uploadImage(file, 'posts/inline');
+    },
     async savePost(payload, editId, file) {
       if (!(await requireAdmin())) throw new Error('Vui lòng đăng nhập Admin.');
       const image = await uploadImage(file, 'posts') || payload.image;

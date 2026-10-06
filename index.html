@@ -624,6 +624,15 @@
             <label>Hoặc tải ảnh đại diện từ máy<input type="file" id="postImageFile" accept="image/jpeg,image/png,image/webp,image/avif"></label>
             <label>Mô tả ngắn<textarea id="postExcerpt" rows="3" required placeholder="Mô tả hiển thị ngoài trang bài viết..."></textarea></label>
             <label>Nội dung<textarea id="postContent" rows="10" required placeholder="Nội dung bài viết..."></textarea></label>
+            <div class="post-inline-tools">
+              <p>Ảnh trong bài viết <small>Đặt con trỏ trong ô Nội dung, rồi chọn ảnh để chèn đúng vị trí.</small></p>
+              <label>Chọn ảnh từ máy<input type="file" id="postInlineImageFile" accept="image/jpeg,image/png,image/webp,image/avif" multiple></label>
+              <div class="post-inline-url">
+                <label>Hoặc URL ảnh trực tiếp<input type="url" id="postInlineImageUrl" placeholder="https://example.com/anh.jpg"></label>
+                <button type="button" class="admin-secondary" id="postInlineImageUrlInsert">Chèn URL ảnh</button>
+              </div>
+              <p class="post-inline-status" id="postInlineImageStatus" role="status" aria-live="polite"></p>
+            </div>
             <div class="post-form-actions">
               <button type="submit" class="btn btn-dark" id="postSubmit">Đăng bài <span>↗</span></button>
               <button type="button" class="admin-secondary" id="postCancel">Hủy</button>

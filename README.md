@@ -5,6 +5,7 @@ Gói này không cần Render, Railway, VPS hoặc backend Node.js.
 - GitHub Pages xuất bản HTML/CSS/JavaScript.
 - Supabase Database lưu album concept, Portfolio, bài viết và yêu cầu đặt lịch.
 - Supabase Storage lưu ảnh concept, Portfolio và bài viết.
+- Trong Admin → Bài viết, đặt con trỏ trong ô Nội dung rồi chọn một hoặc nhiều ảnh từ máy (tối đa 10 ảnh/lần, mỗi ảnh tối đa 12 MB) hoặc chèn URL ảnh HTTPS trực tiếp. Ảnh nằm giữa các đoạn văn trong bài sau khi bấm Đăng bài/Lưu bài. Ảnh từ máy được tải vào bucket `site-images` hiện có; không cần chạy thêm SQL. Ảnh đại diện vẫn được chọn riêng.
 - Supabase Auth xác thực tài khoản Admin.
 - Row Level Security giới hạn quyền đọc/ghi trực tiếp từ trình duyệt.
 - Nút ở đầu trang cho phép đổi giao diện sáng/tối; lựa chọn được ghi nhớ trên thiết bị.
@@ -64,7 +65,7 @@ Không dùng `secret key` hoặc `service_role key` trong website/GitHub.
 3. Trên website nhấn biểu tượng Admin và đăng nhập bằng tài khoản đã tạo trong Supabase Auth.
 4. Mở tab **6 Concept**, tải nhiều ảnh và lưu album.
 5. Kiểm tra `concept_images` có dữ liệu và Storage bucket `concept-images` có file.
-6. Thử tạo/xóa một bài viết và tải ảnh Portfolio, sau đó mở cửa sổ ẩn danh để xác nhận mọi thay đổi xuất hiện giống nhau.
+6. Thử tạo bài viết có ảnh chèn trong Nội dung, tải ảnh Portfolio, sau đó mở cửa sổ ẩn danh để xác nhận ảnh và thay đổi xuất hiện giống nhau.
 7. Đăng xuất hoặc mở cửa sổ ẩn danh để xác nhận album vẫn hiển thị ngoài trang chủ và các trang concept.
 8. Trong Admin → **Nhạc nền**, tải MP3 (tối đa 15 MB) hoặc dán URL âm thanh trực tiếp, rồi mở một trang khác để kiểm tra. Có thể bấm **Dùng nhạc mặc định** để khôi phục.
 
