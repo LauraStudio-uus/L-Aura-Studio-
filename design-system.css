@@ -572,6 +572,7 @@ html[data-theme="dark"] .article-reader-body #articleContent p a:hover{color:#ff
 }
 /* Service detail page and the concept-only Home section */
 .concepts-only .concept-showcase{margin-top:0;padding-top:0;border-top:0}
+.home-package-details{margin-top:0}
 .concept-services-link{margin:38px 0 0;text-align:right}
 .service-section-copy{max-width:660px;margin-top:22px;color:var(--muted);font-size:15px;line-height:1.75}
 .service-details-section .package-details{margin-top:0}
